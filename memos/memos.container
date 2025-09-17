@@ -1,0 +1,31 @@
+[Unit]
+Description=Memos - Note-taking
+
+[Container]
+ContainerName=memos
+Image=ghcr.io/usememos/memos:stable
+AutoUpdate=registry
+Pull=newer
+
+# Volume for data persistence
+Volume=./container-data/memos:/var/opt/memos:Z
+
+# Network
+Network=shared-network
+
+# Environment variables
+EnvironmentFile=.env
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.memos.rule=Host(`memos.${DOMAIN_URL}`)"
+Label="traefik.http.routers.memos.entrypoints=web-secure,web-secure-internal"
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=always
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target

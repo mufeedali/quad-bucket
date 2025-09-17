@@ -1,0 +1,28 @@
+[Unit]
+Description=Beaver - Habits tracker
+
+[Container]
+ContainerName=beaver
+Image=docker.io/daya0576/beaverhabits:latest
+AutoUpdate=registry
+Pull=newer
+
+EnvironmentFile=.env
+
+UserNS=keep-id:uid=%U,gid=%G
+
+Network=shared-network
+
+Volume=./container-data/beaver:/app/.user/
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.beaver.rule=Host(`habits.${DOMAIN_URL}`)"
+Label="traefik.http.routers.beaver.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.beaver.middlewares=pocket-id"
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=always
+TimeoutStartSec=60s
+TimeoutStopSec=30s

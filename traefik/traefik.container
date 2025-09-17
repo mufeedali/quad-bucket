@@ -1,0 +1,35 @@
+[Unit]
+Description=Traefik - Reverse Proxy
+After=http.socket https.socket
+Requires=http.socket https.socket
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Sockets=http.socket https.socket
+Restart=always
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Container]
+ContainerName=traefik
+Image=docker.io/library/traefik
+AutoUpdate=registry
+Pull=newer
+
+EnvironmentFile=.env
+
+Network=shared-network
+
+Volume=%t/podman/podman.sock:/var/run/docker.sock
+
+Volume=./container-config/traefik/traefik.yaml:/etc/traefik/traefik.yml
+Volume=./container-config/traefik/acme.json:/acme.json
+
+Notify=true
+SecurityLabelDisable=true
+
+Label="traefik.enable=true"
+Label="traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_URL}`)"
+Label="traefik.http.routers.api.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.api.service=api@internal"
+Label="traefik.http.routers.api.middlewares=pocket-id"

@@ -1,0 +1,16 @@
+[Unit]
+Description=Update Cloudflare IP ranges in Traefik config
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/.config/containers/systemd/traefik/cloudflare-updater
+ExecStart=%h/.config/containers/systemd/traefik/cloudflare-updater/update-cloudflare-ips.py
+
+# Don't restart on failure - let the timer handle scheduling
+Restart=no
+
+# Log output for debugging
+StandardOutput=journal
+StandardError=journal

@@ -1,0 +1,31 @@
+[Unit]
+Description=Actual Budget - Personal Finance Manager
+
+[Container]
+ContainerName=actual
+Image=ghcr.io/actualbudget/actual:latest
+AutoUpdate=registry
+Pull=newer
+
+# Volume for data persistence
+Volume=./container-data/actual:/data:Z
+
+# Network
+Network=shared-network
+
+# Environment variables
+EnvironmentFile=.env
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.actual.rule=Host(`actual.${DOMAIN_URL}`)"
+Label="traefik.http.routers.actual.entrypoints=web-secure,web-secure-internal"
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=always
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target

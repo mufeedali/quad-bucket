@@ -1,0 +1,26 @@
+[Unit]
+Description=LiveSync - CouchDB instance for the Obsidian LiveSync plugin
+
+[Container]
+ContainerName=livesync-db
+Image=docker.io/library/couchdb:latest
+AutoUpdate=registry
+Pull=newer
+
+EnvironmentFile=.env
+
+Network=shared-network
+
+Volume=./container-data/couchdb:/opt/couchdb/data
+Volume=./container-data/couchdb-etc:/opt/couchdb/etc/local.d
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.livesync.rule=Host(`livesync.${DOMAIN_URL}`)"
+Label="traefik.http.routers.livesync.entrypoints=web-secure,web-secure-internal"
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=always
+TimeoutStartSec=60s
+TimeoutStopSec=30s

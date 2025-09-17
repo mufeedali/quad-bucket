@@ -1,0 +1,23 @@
+[Unit]
+Description=Collabora - Office Suite
+
+[Container]
+ContainerName=collabora
+Image=docker.io/collabora/code:latest
+AutoUpdate=registry
+Pull=newer
+
+EnvironmentFile=.env
+
+Network=shared-network
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.collabora.rule=Host(`office.${DOMAIN_URL}`)"
+Label="traefik.http.routers.collabora.entrypoints=web-secure,web-secure-internal"
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=always
+TimeoutStartSec=60s
+TimeoutStopSec=30s
