@@ -4,6 +4,13 @@ Description=Pocket ID - OIDC Auth
 [Install]
 WantedBy=multi-user.target default.target
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+EnvironmentFile=%h/.config/containers/systemd/pocket-id/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
 [Container]
 ContainerName=pocket-id
 Image=ghcr.io/pocket-id/pocket-id
@@ -37,10 +44,3 @@ Label="traefik.http.middlewares.pocket-id.plugin.traefik-oidc-auth.Provider.Url=
 Label="traefik.http.middlewares.pocket-id.plugin.traefik-oidc-auth.Provider.ClientId=${OIDC_CLIENT_ID}"
 Label="traefik.http.middlewares.pocket-id.plugin.traefik-oidc-auth.Provider.ClientSecret=${OIDC_CLIENT_SECRET}"
 Label="traefik.http.middlewares.pocket-id.plugin.traefik-oidc-auth.Scopes=openid,profile,email"
-
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-EnvironmentFile=%h/.config/containers/systemd/pocket-id/.env
-Restart=always
-TimeoutStartSec=60s
-TimeoutStopSec=30s

@@ -4,6 +4,12 @@ Description=SilverBullet - Markdown Note-taking
 [Install]
 WantedBy=multi-user.target default.target
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
 [Container]
 ContainerName=silverbullet
 Image=ghcr.io/silverbulletmd/silverbullet:v2
@@ -24,9 +30,3 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.silverbullet.rule=Host(`sb.${DOMAIN_URL}`)"
 Label="traefik.http.routers.silverbullet.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.silverbullet.middlewares=pocket-id"
-
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=always
-TimeoutStartSec=60s
-TimeoutStopSec=30s

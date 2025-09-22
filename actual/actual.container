@@ -23,7 +23,7 @@ Label="traefik.http.routers.actual.entrypoints=web-secure,web-secure-internal"
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=always
+Restart=on-abnormal
 TimeoutStartSec=60s
 TimeoutStopSec=30s
 

@@ -1,6 +1,14 @@
 [Unit]
 Description=Beszel - Server Monitoring Agent
 
+[Service]
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
 [Container]
 ContainerName=beszel-agent
 Image=ghcr.io/henrygd/beszel/beszel-agent:latest
@@ -8,12 +16,9 @@ AutoUpdate=registry
 Pull=newer
 
 EnvironmentFile=.env
+Environment=DOCKER_HOST=unix://%t/podman/podman.sock
 
 Network=host
 
-Volume=${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:ro
-
-[Service]
-Restart=always
-TimeoutStartSec=60s
-TimeoutStopSec=30s
+Volume=./container-data/beszel-agent:/var/lib/beszel-agent
+Volume=%t/podman/podman.sock:%t/podman/podman.sock:ro

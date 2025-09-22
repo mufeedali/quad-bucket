@@ -6,9 +6,12 @@ Requires=http.socket https.socket
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Sockets=http.socket https.socket
-Restart=always
+Restart=on-abnormal
 TimeoutStartSec=60s
 TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
 
 [Container]
 ContainerName=traefik

@@ -1,6 +1,15 @@
 [Unit]
 Description=Tesseract - Lemmy frontend
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
 [Container]
 ContainerName=tesseract
 Image=ghcr.io/asimons04/tesseract:latest
@@ -17,7 +26,3 @@ Volume=tesseract-cache:/app/cache
 Label="traefik.enable=true"
 Label="traefik.http.routers.tesseract.rule=Host(`tesseract.${DOMAIN_URL}`)"
 Label="traefik.http.routers.tesseract.entrypoints=web-secure,web-secure-internal"
-
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=always

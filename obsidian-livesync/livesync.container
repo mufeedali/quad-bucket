@@ -1,6 +1,15 @@
 [Unit]
 Description=LiveSync - CouchDB instance for the Obsidian LiveSync plugin
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
 [Container]
 ContainerName=livesync-db
 Image=docker.io/library/couchdb:latest
@@ -18,9 +27,4 @@ Volume=./container-data/couchdb-etc:/opt/couchdb/etc/local.d
 Label="traefik.enable=true"
 Label="traefik.http.routers.livesync.rule=Host(`livesync.${DOMAIN_URL}`)"
 Label="traefik.http.routers.livesync.entrypoints=web-secure,web-secure-internal"
-
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=always
-TimeoutStartSec=60s
-TimeoutStopSec=30s
+Label="traefik.http.services.livesync.loadbalancer.server.port=5984"

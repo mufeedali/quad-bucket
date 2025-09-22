@@ -1,6 +1,15 @@
 [Unit]
 Description=Collabora - Office Suite
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
 [Container]
 ContainerName=collabora
 Image=docker.io/collabora/code:latest
@@ -15,9 +24,3 @@ Network=shared-network
 Label="traefik.enable=true"
 Label="traefik.http.routers.collabora.rule=Host(`office.${DOMAIN_URL}`)"
 Label="traefik.http.routers.collabora.entrypoints=web-secure,web-secure-internal"
-
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=always
-TimeoutStartSec=60s
-TimeoutStopSec=30s

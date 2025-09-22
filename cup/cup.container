@@ -1,6 +1,15 @@
 [Unit]
 Description=Cup - Container Updates Checker
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
 [Container]
 ContainerName=cup
 Image=ghcr.io/sergi0g/cup:latest
@@ -18,9 +27,3 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.cup.rule=Host(`cup.${DOMAIN_URL}`)"
 Label="traefik.http.routers.cup.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.cup.middlewares=pocket-id"
-
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=always
-TimeoutStartSec=60s
-TimeoutStopSec=30s
