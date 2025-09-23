@@ -26,4 +26,4 @@ Volume=${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:ro
 Label="traefik.enable=true"
 Label="traefik.http.routers.cup.rule=Host(`cup.${DOMAIN_URL}`)"
 Label="traefik.http.routers.cup.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.cup.middlewares=pocket-id"
+Label="traefik.http.routers.cup.middlewares=tinyauth"

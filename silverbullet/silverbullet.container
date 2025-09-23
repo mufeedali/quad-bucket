@@ -29,4 +29,4 @@ EnvironmentFile=.env
 Label="traefik.enable=true"
 Label="traefik.http.routers.silverbullet.rule=Host(`sb.${DOMAIN_URL}`)"
 Label="traefik.http.routers.silverbullet.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.silverbullet.middlewares=pocket-id"
+Label="traefik.http.routers.silverbullet.middlewares=tinyauth"

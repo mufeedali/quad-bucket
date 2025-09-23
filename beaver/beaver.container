@@ -28,4 +28,4 @@ Volume=%h/container-data/beaver:/app/.user/
 Label="traefik.enable=true"
 Label="traefik.http.routers.beaver.rule=Host(`habits.${DOMAIN_URL}`)"
 Label="traefik.http.routers.beaver.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.beaver.middlewares=pocket-id"
+Label="traefik.http.routers.beaver.middlewares=tinyauth"
