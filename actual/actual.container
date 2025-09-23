@@ -8,7 +8,7 @@ AutoUpdate=registry
 Pull=newer
 
 # Volume for data persistence
-Volume=./container-data/actual:/data:Z
+Volume=%h/container-data/actual:/data:Z
 
 # Network
 Network=shared-network

@@ -22,7 +22,7 @@ UserNS=keep-id:uid=%U,gid=%G
 
 Network=shared-network
 
-Volume=./container-data/beaver:/app/.user/
+Volume=%h/container-data/beaver:/app/.user/
 
 # Traefik labels
 Label="traefik.enable=true"

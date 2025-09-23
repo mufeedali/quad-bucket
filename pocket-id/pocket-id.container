@@ -18,7 +18,7 @@ AutoUpdate=registry
 Pull=newer
 
 # Volumes
-Volume=./container-data/pocket-id:/app/data
+Volume=%h/container-data/pocket-id:/app/data
 
 # Environment variables
 EnvironmentFile=.env

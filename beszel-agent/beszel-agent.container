@@ -20,5 +20,5 @@ Environment=DOCKER_HOST=unix://%t/podman/podman.sock
 
 Network=host
 
-Volume=./container-data/beszel-agent:/var/lib/beszel-agent
+Volume=%h/container-data/beszel-agent:/var/lib/beszel-agent
 Volume=%t/podman/podman.sock:%t/podman/podman.sock:ro

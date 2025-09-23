@@ -17,7 +17,7 @@ AutoUpdate=registry
 Pull=newer
 
 # Volume for data persistence
-Volume=./container-data/memos:/var/opt/memos:Z
+Volume=%h/container-data/memos:/var/opt/memos:Z
 
 # Network
 Network=shared-network

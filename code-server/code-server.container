@@ -21,8 +21,8 @@ EnvironmentFile=.env
 Network=shared-network
 
 Volume=%h:%h
-Volume=./container-data/code-server/config/.ssh:/root/.ssh/:ro
-Volume=./container-data/code-server/config:/config
+Volume=%h/container-data/code-server/config/.ssh:/root/.ssh/:ro
+Volume=%h/container-data/code-server/config:/config
 
 # Traefik labels
 Label="traefik.enable=true"

@@ -17,7 +17,7 @@ AutoUpdate=registry
 Pull=newer
 
 # Volumes
-Volume=./container-data/silverbullet/:/space
+Volume=%h/container-data/silverbullet/:/space
 
 # Network
 Network=shared-network
