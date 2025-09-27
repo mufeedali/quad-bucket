@@ -21,6 +21,13 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.actual.rule=Host(`actual.${DOMAIN_URL}`)"
 Label="traefik.http.routers.actual.entrypoints=web-secure,web-secure-internal"
 
+# Glance Dashboard Labels
+Label="glance.name=Actual Budget"
+Label="glance.icon=si:actualbudget"
+Label="glance.url=https://actual.${DOMAIN_URL}"
+Label="glance.description=Envelope Budgeting"
+Label="glance.id=actual"
+
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal

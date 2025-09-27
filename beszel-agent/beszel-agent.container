@@ -22,3 +22,10 @@ Network=host
 
 Volume=%h/container-data/beszel-agent:/var/lib/beszel-agent
 Volume=%t/podman/podman.sock:%t/podman/podman.sock:ro
+
+# Glance Dashboard Labels
+Label="glance.name=Beszel"
+Label="glance.icon=auto-invert sh:beszel-dark"
+Label="glance.url=https://stats.${DOMAIN_URL}"
+Label="glance.description=Monitoring Agent"
+Label="glance.id=beszel"

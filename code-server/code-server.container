@@ -29,3 +29,10 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.code-server.rule=Host(`code.${DOMAIN_URL}`)"
 Label="traefik.http.routers.code-server.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.code-server.middlewares=tinyauth"
+
+# Glance Dashboard Labels
+Label="glance.name=Remote Code"
+Label="glance.icon=si:coder"
+Label="glance.url=https://code.${DOMAIN_URL}"
+Label="glance.description=Remote Dev Environment"
+Label="glance.id=code-server"

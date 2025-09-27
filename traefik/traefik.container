@@ -37,3 +37,10 @@ Label="traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_URL}`)"
 Label="traefik.http.routers.api.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.api.service=api@internal"
 Label="traefik.http.routers.api.middlewares=tinyauth"
+
+# Glance Dashboard Labels
+Label="glance.name=Traefik"
+Label="glance.icon=auto-invert sh:traefik-dark"
+Label="glance.url=https://traefik.${DOMAIN_URL}"
+Label="glance.description=Reverse Proxy"
+Label="glance.id=traefik"

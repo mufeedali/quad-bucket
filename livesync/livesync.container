@@ -11,8 +11,8 @@ TimeoutStopSec=30s
 WantedBy=multi-user.target default.target
 
 [Container]
-ContainerName=livesync-db
-Image=docker.io/library/couchdb:latest
+ContainerName=livesync
+Image=docker.io/apache/couchdb:latest
 AutoUpdate=registry
 Pull=newer
 
@@ -20,11 +20,20 @@ EnvironmentFile=.env
 
 Network=shared-network
 
-Volume=./container-data/couchdb:/opt/couchdb/data
-Volume=./container-data/couchdb-etc:/opt/couchdb/etc/local.d
+UserNS=keep-id:uid=5984,gid=5984
+
+Volume=%h/container-data/livesync/data:/opt/couchdb/data
+Volume=%h/container-data/livesync/config:/opt/couchdb/etc/local.d
 
 # Traefik labels
 Label="traefik.enable=true"
 Label="traefik.http.routers.livesync.rule=Host(`livesync.${DOMAIN_URL}`)"
 Label="traefik.http.routers.livesync.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.services.livesync.loadbalancer.server.port=5984"
+
+# Glance Dashboard Labels
+Label="glance.name=CouchDB"
+Label="glance.icon=si:apachecouchdb"
+Label="glance.url=https://livesync.${DOMAIN_URL}"
+Label="glance.description=DB for Obsidian LiveSync"
+Label="glance.id=couchdb"

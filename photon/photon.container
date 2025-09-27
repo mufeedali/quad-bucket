@@ -1,0 +1,24 @@
+[Unit]
+Description=Photon - Lemmy frontend
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+ContainerName=photon
+Image=ghcr.io/xyphyn/photon:latest
+AutoUpdate=registry
+Pull=newer
+
+Network=shared-network
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.photon.rule=Host(`photon.${DOMAIN_URL}`)"
+Label="traefik.http.routers.photon.entrypoints=web-secure,web-secure-internal"

@@ -1,0 +1,44 @@
+[Unit]
+Description=Glance - My Homepage
+
+[Container]
+ContainerName=glance
+Image=docker.io/glanceapp/glance:latest
+AutoUpdate=registry
+Pull=newer
+
+# Volume for data persistence
+Volume=./container-config/config:/app/config:Z
+Volume=./container-config/assets:/app/assets:Z
+Volume=/etc/localtime:/etc/localtime:ro
+Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
+
+# Network
+Network=shared-network
+
+# Environment variables
+EnvironmentFile=.env
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.glance.rule=Host(`home.${DOMAIN_URL}`)"
+Label="traefik.http.routers.glance.entrypoints=web-secure,web-secure-internal"
+
+# FIXME: Not sure if I should enable tinyauth for my homepage...
+# Label="traefik.http.routers.glance.middlewares=tinyauth"
+
+# Glance Dashboard Labels
+Label="glance.name=Glance"
+Label="glance.icon=auto-invert sh:glance-dark"
+Label="glance.url=https://home.${DOMAIN_URL}"
+Label="glance.description=Dashboard & Homepage"
+Label="glance.id=glance"
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target

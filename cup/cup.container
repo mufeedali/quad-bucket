@@ -27,3 +27,10 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.cup.rule=Host(`cup.${DOMAIN_URL}`)"
 Label="traefik.http.routers.cup.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.cup.middlewares=tinyauth"
+
+# Glance Dashboard Labels
+Label="glance.name=Cup"
+Label="glance.icon=auto-invert sh:cup-updates-dark"
+Label="glance.url=https://cup.${DOMAIN_URL}"
+Label="glance.description=Container Updates Checker"
+Label="glance.id=cup"

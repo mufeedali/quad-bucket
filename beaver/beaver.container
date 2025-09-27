@@ -29,3 +29,10 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.beaver.rule=Host(`habits.${DOMAIN_URL}`)"
 Label="traefik.http.routers.beaver.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.beaver.middlewares=tinyauth"
+
+# Glance Dashboard Labels
+Label="glance.name=Beaver Habits"
+Label="glance.icon=auto-invert sh:beaver-habit-tracker-dark"
+Label="glance.url=https://habits.${DOMAIN_URL}"
+Label="glance.description=Habit Tracker"
+Label="glance.id=beaver-habits"

@@ -24,3 +24,10 @@ Network=shared-network
 Label="traefik.enable=true"
 Label="traefik.http.routers.collabora.rule=Host(`office.${DOMAIN_URL}`)"
 Label="traefik.http.routers.collabora.entrypoints=web-secure,web-secure-internal"
+
+# Glance Dashboard Labels
+Label="glance.name=Collabora"
+Label="glance.icon=si:collaboraonline"
+Label="glance.url=https://office.${DOMAIN_URL}"
+Label="glance.description=Office for Nextcloud"
+Label="glance.id=collabora"

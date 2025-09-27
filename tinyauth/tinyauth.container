@@ -1,5 +1,5 @@
 [Unit]
-Description=TinyAuth - Lightweight Authentication Service
+Description=Tinyauth - Lightweight Authentication
 
 [Container]
 ContainerName=tinyauth
@@ -18,6 +18,13 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.tinyauth.rule=Host(`auth.${DOMAIN_URL}`)"
 Label="traefik.http.routers.tinyauth.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
+
+# Glance Dashboard Labels
+Label="glance.name=Tinyauth"
+Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/tinyauth.webp"
+Label="glance.url=https://auth.${DOMAIN_URL}"
+Label="glance.description=Lightweight Authentication"
+Label="glance.id=tinyauth"
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env

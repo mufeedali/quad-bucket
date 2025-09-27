@@ -37,3 +37,10 @@ Label="traefik.enable=true"
 Label="traefik.http.routers.pocket-id.rule=Host(`id.${DOMAIN_URL}`)"
 Label="traefik.http.routers.pocket-id.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.services.pocket-id.loadbalancer.server.port=5000"
+
+# Glance Dashboard Labels
+Label="glance.name=Pocket ID"
+Label="glance.icon=auto-invert sh:pocket-id-dark"
+Label="glance.url=https://id.${DOMAIN_URL}"
+Label="glance.description=OIDC Auth"
+Label="glance.id=pocket-id"
