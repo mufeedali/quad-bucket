@@ -13,6 +13,8 @@ Network=shared-network
 # Environment variables
 EnvironmentFile=.env
 
+Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
+
 # Traefik labels
 Label="traefik.enable=true"
 Label="traefik.http.routers.tinyauth.rule=Host(`auth.${DOMAIN_URL}`)"

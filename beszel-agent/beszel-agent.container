@@ -2,6 +2,7 @@
 Description=Beszel - Server Monitoring Agent
 
 [Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
 TimeoutStartSec=60s
 TimeoutStopSec=30s

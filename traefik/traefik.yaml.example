@@ -3,6 +3,10 @@ api:
     dashboard: true
     debug: false
 
+# accessLog:
+#     filePath: "/logs/access.log"
+#     format: json
+
 # Define the trusted Cloudflare IPs
 cloudflare-ips: &cloudflare-ips
     trustedIPs:
@@ -29,10 +33,19 @@ cloudflare-ips: &cloudflare-ips
         - "2a06:98c0::/29"
         - "2c0f:f248::/32"
 
+# Define the common responding timeouts
+responding-timeouts: &responding-timeouts
+    # My parents' network speed is awful.
+    readTimeout: 1800s
+    idleTimeout: 1800s
+    writeTimeout: 1800s
+
 entryPoints:
     # systemd socket
     web:
         address: 0.0.0.0:80
+        transport:
+          respondingTimeouts: *responding-timeouts
         http:
             redirections:
                 entryPoint:
@@ -40,6 +53,8 @@ entryPoints:
                     scheme: https
     web-internal:
         address: 0.0.0.0:80
+        transport:
+          respondingTimeouts: *responding-timeouts
         http:
             redirections:
                 entryPoint:
@@ -48,17 +63,21 @@ entryPoints:
     # systemd socket
     web-secure:
         address: 0.0.0.0:443
+        http3: true
+        transport:
+          respondingTimeouts: *responding-timeouts
         http:
             tls:
                 certResolver: cloudflare-resolver
-        http3: true
         forwardedHeaders: *cloudflare-ips
     web-secure-internal:
         address: 0.0.0.0:443
+        http3: true
+        transport:
+          respondingTimeouts: *responding-timeouts
         http:
             tls:
                 certResolver: cloudflare-resolver
-        http3: true
 
 providers:
     docker:

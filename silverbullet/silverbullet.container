@@ -37,3 +37,7 @@ Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/silverbullet.w
 Label="glance.url=https://sb.${DOMAIN_URL}"
 Label="glance.description=Markdown Note-taking"
 Label="glance.id=silverbullet"
+
+# Tinyauth
+Label="tinyauth.domain=sb.${DOMAIN_URL}"
+Label="tinyauth.allowed=^(\\/\\.client\\/manifest\\.json|\\/\\.client\\/[a-zA-Z0-9_-]+\\.png|\\/service_worker\\.js)$"

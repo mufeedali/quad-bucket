@@ -28,6 +28,7 @@ Volume=%t/podman/podman.sock:/var/run/docker.sock
 
 Volume=./container-config/traefik/traefik.yaml:/etc/traefik/traefik.yml
 Volume=./container-config/traefik/acme.json:/acme.json
+# Volume=%h/container-data/traefik/logs/:/logs/
 
 Notify=true
 SecurityLabelDisable=true
