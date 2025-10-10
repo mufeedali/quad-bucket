@@ -1,7 +1,7 @@
 [Unit]
 Description=Traefik - Reverse Proxy
-After=http.socket https.socket
-Requires=http.socket https.socket
+After=http.socket https.socket tinyauth.container
+Requires=http.socket https.socket tinyauth.container
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env

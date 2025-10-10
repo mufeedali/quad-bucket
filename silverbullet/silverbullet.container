@@ -27,6 +27,7 @@ EnvironmentFile=.env
 
 # Traefik labels
 Label="traefik.enable=true"
+Label="traefik.http.services.silverbullet.loadbalancer.server.port=3000"
 Label="traefik.http.routers.silverbullet.rule=Host(`sb.${DOMAIN_URL}`)"
 Label="traefik.http.routers.silverbullet.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.silverbullet.middlewares=tinyauth"
@@ -39,5 +40,4 @@ Label="glance.description=Markdown Note-taking"
 Label="glance.id=silverbullet"
 
 # Tinyauth
-Label="tinyauth.domain=sb.${DOMAIN_URL}"
-Label="tinyauth.allowed=^(\\/\\.client\\/manifest\\.json|\\/\\.client\\/[a-zA-Z0-9_-]+\\.png|\\/service_worker\\.js)$"
+Label="tinyauth.apps.sb.path.allow=^(\\/\\.client\\/manifest\\.json|\\/\\.client\\/[a-zA-Z0-9_-]+\\.png|\\/service_worker\\.js)$"

@@ -1,9 +1,11 @@
 [Unit]
 Description=Tinyauth - Lightweight Authentication
+After=pocket-id.container
+Requires=pocket-id.container
 
 [Container]
 ContainerName=tinyauth
-Image=ghcr.io/steveiliop56/tinyauth:v3
+Image=ghcr.io/steveiliop56/tinyauth:v4
 AutoUpdate=registry
 Pull=newer
 
@@ -13,6 +15,8 @@ Network=shared-network
 # Environment variables
 EnvironmentFile=.env
 
+# Volume for data persistence
+Volume=%h/container-data/tinyauth/sessions/:/data:Z
 Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
 
 # Traefik labels
