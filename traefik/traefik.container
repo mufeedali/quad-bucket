@@ -1,7 +1,7 @@
 [Unit]
 Description=Traefik - Reverse Proxy
-After=http.socket https.socket tinyauth.container
-Requires=http.socket https.socket tinyauth.container
+After=http.socket https.socket tinyauth.service
+Requires=http.socket https.socket tinyauth.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
@@ -23,6 +23,7 @@ EnvironmentFile=.env
 
 Network=shared-network
 NetworkAlias=id.${DOMAIN_URL}
+NetworkAlias=auth.${DOMAIN_URL}
 
 Volume=%t/podman/podman.sock:/var/run/docker.sock
 

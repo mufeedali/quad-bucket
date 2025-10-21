@@ -1,7 +1,7 @@
 [Unit]
 Description=Tinyauth - Lightweight Authentication
-After=pocket-id.container
-Requires=pocket-id.container
+After=pocket-id.service
+Requires=pocket-id.service
 
 [Container]
 ContainerName=tinyauth
