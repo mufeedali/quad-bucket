@@ -2,6 +2,8 @@
 
 Collection of [quadlets](https://docs.podman.io/en/latest/markdown/podman-systemd.unit.5.html).
 
+I also make use of some compose stacks: [`compose-bucket`](https://github.com/mufeedali/compose-bucket).
+
 ## Structure
 
 - Pod dirs: `actual/`, `beaver/`, etc.

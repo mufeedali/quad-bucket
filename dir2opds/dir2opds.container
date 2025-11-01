@@ -1,0 +1,37 @@
+[Unit]
+Description=Dir2OPDS - Books Hosting
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+ContainerName=dir2opds
+Image=ghcr.io/mufeedali/dir2opds:latest
+Exec=-group-formats -author-from-folder -hide-dot-files
+AutoUpdate=registry
+Pull=newer
+
+Network=shared-network
+
+Volume=%h/Books:/books:ro,Z
+
+UserNS=keep-id
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.dir2opds.rule=Host(`opds.${DOMAIN_URL}`)"
+Label="traefik.http.routers.dir2opds.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.dir2opds.loadbalancer.server.port=8080"
+
+# Glance Dashboard Labels
+Label="glance.name=Dir2OPDS"
+Label="glance.icon=mdi:bookshelf"
+Label="glance.url=https://opds.${DOMAIN_URL}"
+Label="glance.description=Books Hosting"
+Label="glance.id=dir2opds"
