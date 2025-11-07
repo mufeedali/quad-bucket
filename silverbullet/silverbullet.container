@@ -30,7 +30,6 @@ Label="traefik.enable=true"
 Label="traefik.http.services.silverbullet.loadbalancer.server.port=3000"
 Label="traefik.http.routers.silverbullet.rule=Host(`sb.${DOMAIN_URL}`)"
 Label="traefik.http.routers.silverbullet.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.silverbullet.middlewares=tinyauth"
 
 # Glance Dashboard Labels
 Label="glance.name=SilverBullet"
@@ -40,4 +39,4 @@ Label="glance.description=Markdown Note-taking"
 Label="glance.id=silverbullet"
 
 # Tinyauth
-Label="tinyauth.apps.sb.path.allow=^(\\/\\.client\\/manifest\\.json|\\/\\.client\\/[a-zA-Z0-9_-]+\\.png|\\/service_worker\\.js)$"
+# Label="tinyauth.apps.sb.path.allow=^(\\/\\.client\\/manifest\\.json|\\/\\.client\\/[a-zA-Z0-9_-]+\\.png|\\/service_worker\\.js)$"

@@ -20,7 +20,7 @@ Exec=serve
 
 Network=shared-network
 
-Volume=${XDG_RUNTIME_DIR}/podman/podman.sock:/var/run/docker.sock:ro
+Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
 
 # Traefik labels
 Label="traefik.enable=true"

@@ -1,0 +1,35 @@
+[Unit]
+Description=Papra - Document Archiving Platform
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+ContainerName=papra
+Image=ghcr.io/papra-hq/papra:latest
+AutoUpdate=registry
+Pull=newer
+
+Network=shared-network
+
+Volume=%h/container-data/papra:/app/app-data
+EnvironmentFile=.env
+User=0:0
+
+# Traefik labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.papra.rule=Host(`papra.${DOMAIN_URL}`)"
+Label="traefik.http.routers.papra.entrypoints=web-secure,web-secure-internal"
+
+# Glance Dashboard Labels
+Label="glance.name=Papra"
+Label="glance.icon=auto-invert sh:papra-dark"
+Label="glance.url=https://papra.${DOMAIN_URL}"
+Label="glance.description=Document Archiving"
+Label="glance.id=papra"
