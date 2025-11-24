@@ -1,6 +1,32 @@
 [Unit]
 Description=Cup - Container Updates Checker
 
+[Container]
+# Base options
+AutoUpdate=registry
+ContainerName=cup
+Exec=-c /config/cup.json serve
+Image=ghcr.io/sergi0g/cup:latest
+Pull=newer
+
+# Label options
+Label="glance.description=Container Updates Checker"
+Label="glance.icon=auto-invert sh:cup-updates-dark"
+Label="glance.id=cup"
+Label="glance.name=Cup"
+Label="glance.url=https://cup.${DOMAIN_URL}"
+Label="traefik.enable=true"
+Label="traefik.http.routers.cup.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.cup.middlewares=tinyauth"
+Label="traefik.http.routers.cup.rule=Host(`cup.${DOMAIN_URL}`)"
+
+# Storage options
+Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
+Volume=./container-config/cup.json:/config/cup.json
+
+# Network options
+Network=shared-network
+
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -10,27 +36,3 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
-[Container]
-ContainerName=cup
-Image=ghcr.io/sergi0g/cup:latest
-AutoUpdate=registry
-Pull=newer
-
-Exec=serve
-
-Network=shared-network
-
-Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
-
-# Traefik labels
-Label="traefik.enable=true"
-Label="traefik.http.routers.cup.rule=Host(`cup.${DOMAIN_URL}`)"
-Label="traefik.http.routers.cup.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.cup.middlewares=tinyauth"
-
-# Glance Dashboard Labels
-Label="glance.name=Cup"
-Label="glance.icon=auto-invert sh:cup-updates-dark"
-Label="glance.url=https://cup.${DOMAIN_URL}"
-Label="glance.description=Container Updates Checker"
-Label="glance.id=cup"

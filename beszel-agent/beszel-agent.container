@@ -16,6 +16,10 @@ Image=ghcr.io/henrygd/beszel/beszel-agent:latest
 AutoUpdate=registry
 Pull=newer
 
+User=1001
+Group=1001
+UserNS=keep-id
+
 EnvironmentFile=.env
 Environment=DOCKER_HOST=unix://%t/podman/podman.sock
 
