@@ -1,0 +1,46 @@
+[Unit]
+Requires=tandoor-db.service
+After=tandoor-db.service
+Requires=tandoor-network.service
+After=tandoor-network.service
+
+[Container]
+# Base options
+ContainerName=tandoor
+Image=ghcr.io/tandoorrecipes/recipes:2.3.6
+AutoUpdate=registry
+Pull=newer
+
+# Label options
+Label="traefik.enable=true"
+Label="traefik.http.routers.recipes.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.recipes.rule=Host(`recipes.${DOMAIN_URL}`)"
+Label="traefik.http.middlewares.redirect_tandoor_login.redirectregex.regex=/accounts/login(?:/.*)?$"
+Label="traefik.http.middlewares.redirect_tandoor_login.redirectregex.replacement=/accounts/oidc/pocket-id/login/?process=login"
+Label="traefik.http.middlewares.redirect_tandoor_login.redirectregex.permanent=true"
+Label="traefik.http.routers.recipes.middlewares=redirect_tandoor_login"
+Label="glance.id=tandoor"
+Label="glance.name=Tandoor"
+Label="glance.description=Recipes Manager"
+Label="glance.icon=auto-invert sh:tandoor-recipes-dark"
+Label="glance.url=https://recipes.${DOMAIN_URL}"
+
+# Storage options
+Volume=%h/container-data/tandoor/mediafiles:/opt/recipes/mediafiles
+Volume=%h/container-data/tandoor/staticfiles:/opt/recipes/staticfiles
+
+# Network options
+Network=shared-network
+Network=tandoor.network
+
+# Environment options
+EnvironmentFile=.env
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
