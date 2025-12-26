@@ -6,7 +6,7 @@ After=tandoor-network.service
 [Container]
 # Base options
 ContainerName=tandoor-db
-Image=docker.io/library/postgres:18
+Image=docker.io/library/postgres:18.1
 AutoUpdate=registry
 Pull=newer
 

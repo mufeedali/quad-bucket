@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Renovate Bot Hourly
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=1h
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "deploy-bot",
+    "execute-command": "/bin/touch",
+    "pass-arguments-to-command": [
+      {
+        "source": "string",
+        "name": "/triggers/deploy/trigger"
+      }
+    ],
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "payload-hmac-sha256",
+            "secret": "{{WEBHOOK_SECRET}}",
+            "parameter": {
+              "source": "header",
+              "name": "X-Forgejo-Signature"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/main",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "renovate-bot",
+            "parameter": {
+              "source": "payload",
+              "name": "head_commit.author.username"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "id": "trigger-renovate",
+    "execute-command": "/bin/touch",
+    "pass-arguments-to-command": [
+      {
+        "source": "string",
+        "name": "/triggers/renovate/trigger"
+      }
+    ],
+    "trigger-rule": {
+      "and": [
+        {
+          "match": {
+            "type": "payload-hmac-sha256",
+            "secret": "{{WEBHOOK_SECRET}}",
+            "parameter": {
+              "source": "header",
+              "name": "X-Forgejo-Signature"
+            }
+          }
+        },
+        {
+          "match": {
+            "type": "value",
+            "value": "refs/heads/main",
+            "parameter": {
+              "source": "payload",
+              "name": "ref"
+            }
+          }
+        }
+      ]
+    }
+  }
+]

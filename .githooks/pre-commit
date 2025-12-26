@@ -1,0 +1,7 @@
+#!/bin/sh
+# Pre-commit hook to run `qh generate env`
+# It will only run if `qh` is installed and available in the PATH
+
+if command -v qh >/dev/null 2>&1; then
+    qh generate env
+fi

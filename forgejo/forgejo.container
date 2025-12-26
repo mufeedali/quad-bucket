@@ -1,0 +1,59 @@
+[Unit]
+Description=Forgejo - Git hosting
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+# Base options
+AutoUpdate=registry
+ContainerName=forgejo
+Image=codeberg.org/forgejo/forgejo:13.0.3-rootless
+Pull=newer
+
+# Label options
+Label="glance.description=Git Hosting"
+Label="glance.icon=auto-invert sh:forgejo-dark"
+Label="glance.id=forgejo"
+Label="glance.name=Forgejo"
+Label="glance.url=https://git.${DOMAIN_URL}"
+Label="traefik.enable=true"
+Label="traefik.http.routers.forgejo.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.forgejo.rule=Host(`git.${DOMAIN_URL}`)"
+Label="traefik.http.services.forgejo.loadbalancer.server.port=3000"
+
+# Storage options
+Volume=%h/container-data/forgejo/:/var/lib/gitea
+Volume=./container-config/forgejo/:/etc/gitea
+Volume=/etc/localtime:/etc/localtime:ro
+Volume=/etc/timezone:/etc/timezone:ro
+
+# Network options
+Network=shared-network
+PublishPort=2222:2222
+
+# Environment options
+Environment=FORGEJO__oauth2_client__UPDATE_AVATAR=true
+Environment=FORGEJO__openid__ENABLE_OPENID_SIGNIN=false
+Environment=FORGEJO__server__DOMAIN=git.${DOMAIN_URL}
+Environment=FORGEJO__server__PROTOCOL=http
+Environment=FORGEJO__server__ROOT_URL=https://git.${DOMAIN_URL}/
+Environment=FORGEJO__server__SSH_DOMAIN=src.${DOMAIN_URL}
+Environment=FORGEJO__server__SSH_LISTEN_PORT=2222
+Environment=FORGEJO__server__SSH_PORT=2222
+Environment=FORGEJO__server__START_SSH_SERVER=true
+Environment=FORGEJO__service__ENABLE_INTERNAL_SIGNIN=true
+EnvironmentFile=.env
+
+# Other options
+User=${USER_UID}:${USER_GID}
+UserNS=keep-id
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+

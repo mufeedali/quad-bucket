@@ -3,3 +3,12 @@
 **/container-data/
 **/container-config/
 **/container-logs/
+
+gitops/triggers/*
+!gitops/triggers/.gitkeep
+
+gitops/logs/*
+!gitops/logs/.gitkeep
+
+# Web hook trigger files
+**/trigger

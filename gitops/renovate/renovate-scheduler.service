@@ -1,0 +1,7 @@
+[Unit]
+Description=Restart Renovate Timer (Debounce)
+
+[Service]
+Type=oneshot
+# Restarting the timer resets its countdown
+ExecStart=/usr/bin/systemctl --user restart renovate-push.timer

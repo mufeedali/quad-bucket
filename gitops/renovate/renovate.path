@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch for Renovate Trigger
+
+[Path]
+PathModified=%h/.config/containers/systemd/gitops/webhook/triggers/renovate/
+Unit=renovate-scheduler.service
+
+[Install]
+WantedBy=default.target

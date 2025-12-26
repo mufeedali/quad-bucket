@@ -1,8 +1,32 @@
 [Unit]
 Description=SilverBullet - Markdown Note-taking
 
-[Install]
-WantedBy=multi-user.target default.target
+[Container]
+# Base options
+AutoUpdate=registry
+ContainerName=silverbullet
+Image=ghcr.io/silverbulletmd/silverbullet:2.3.0
+Pull=newer
+
+# Label options
+Label="glance.description=Markdown Note-taking"
+Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/silverbullet.webp"
+Label="glance.id=silverbullet"
+Label="glance.name=SilverBullet"
+Label="glance.url=https://sb.${DOMAIN_URL}"
+Label="traefik.enable=true"
+Label="traefik.http.routers.silverbullet.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.silverbullet.rule=Host(`sb.${DOMAIN_URL}`)"
+Label="traefik.http.services.silverbullet.loadbalancer.server.port=3000"
+
+# Storage options
+Volume=%h/container-data/silverbullet/:/space
+
+# Network options
+Network=shared-network
+
+# Environment options
+EnvironmentFile=.env
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
@@ -10,33 +34,6 @@ Restart=on-abnormal
 TimeoutStartSec=60s
 TimeoutStopSec=30s
 
-[Container]
-ContainerName=silverbullet
-Image=ghcr.io/silverbulletmd/silverbullet:latest
-AutoUpdate=registry
-Pull=newer
+[Install]
+WantedBy=multi-user.target default.target
 
-# Volumes
-Volume=%h/container-data/silverbullet/:/space
-
-# Network
-Network=shared-network
-
-# Environment variables
-EnvironmentFile=.env
-
-# Traefik labels
-Label="traefik.enable=true"
-Label="traefik.http.services.silverbullet.loadbalancer.server.port=3000"
-Label="traefik.http.routers.silverbullet.rule=Host(`sb.${DOMAIN_URL}`)"
-Label="traefik.http.routers.silverbullet.entrypoints=web-secure,web-secure-internal"
-
-# Glance Dashboard Labels
-Label="glance.name=SilverBullet"
-Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/silverbullet.webp"
-Label="glance.url=https://sb.${DOMAIN_URL}"
-Label="glance.description=Markdown Note-taking"
-Label="glance.id=silverbullet"
-
-# Tinyauth
-# Label="tinyauth.apps.sb.path.allow=^(\\/\\.client\\/manifest\\.json|\\/\\.client\\/[a-zA-Z0-9_-]+\\.png|\\/service_worker\\.js)$"

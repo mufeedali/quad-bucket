@@ -1,0 +1,10 @@
+[Unit]
+Description=Renovate Push Debounce Timer
+
+[Timer]
+# Wait 3 minutes after this timer is started/restarted
+OnActiveSec=3m
+Unit=renovate.service
+
+[Install]
+WantedBy=timers.target

@@ -2,31 +2,30 @@
 Description=Actual Budget - Personal Finance Manager
 
 [Container]
-ContainerName=actual
-Image=ghcr.io/actualbudget/actual:latest
+# Base options
 AutoUpdate=registry
+ContainerName=actual
+Image=ghcr.io/actualbudget/actual:25.12.0
 Pull=newer
 
-# Volume for data persistence
+# Label options
+Label="glance.description=Envelope Budgeting"
+Label="glance.icon=si:actualbudget"
+Label="glance.id=actual"
+Label="glance.name=Actual Budget"
+Label="glance.url=https://actual.${DOMAIN_URL}"
+Label="traefik.enable=true"
+Label="traefik.http.routers.actual.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.actual.rule=Host(`actual.${DOMAIN_URL}`)"
+
+# Storage options
 Volume=%h/container-data/actual:/data:Z
 
-# Network
+# Network options
 Network=shared-network
 
-# Environment variables
+# Environment options
 EnvironmentFile=.env
-
-# Traefik labels
-Label="traefik.enable=true"
-Label="traefik.http.routers.actual.rule=Host(`actual.${DOMAIN_URL}`)"
-Label="traefik.http.routers.actual.entrypoints=web-secure,web-secure-internal"
-
-# Glance Dashboard Labels
-Label="glance.name=Actual Budget"
-Label="glance.icon=si:actualbudget"
-Label="glance.url=https://actual.${DOMAIN_URL}"
-Label="glance.description=Envelope Budgeting"
-Label="glance.id=actual"
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
@@ -36,3 +35,4 @@ TimeoutStopSec=30s
 
 [Install]
 WantedBy=multi-user.target default.target
+

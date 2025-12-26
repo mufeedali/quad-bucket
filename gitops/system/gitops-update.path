@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch for GitOps trigger
+
+[Path]
+# Watch the file inside the relabeled directory
+PathModified=%h/.config/containers/systemd/gitops/webhook/triggers/deploy/
+
+[Install]
+WantedBy=default.target

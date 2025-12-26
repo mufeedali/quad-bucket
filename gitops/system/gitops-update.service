@@ -1,0 +1,6 @@
+[Unit]
+Description=Run Update Script
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/containers/systemd/gitops/scripts/gitops-update.sh

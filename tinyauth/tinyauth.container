@@ -4,33 +4,32 @@ After=pocket-id.service
 Requires=pocket-id.service
 
 [Container]
-ContainerName=tinyauth
-Image=ghcr.io/steveiliop56/tinyauth:v4
+# Base options
 AutoUpdate=registry
+ContainerName=tinyauth
+Image=ghcr.io/steveiliop56/tinyauth:v4.1
 Pull=newer
 
-# Network
-Network=shared-network
+# Label options
+Label="glance.description=Lightweight Authentication"
+Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/tinyauth.webp"
+Label="glance.id=tinyauth"
+Label="glance.name=Tinyauth"
+Label="glance.url=https://auth.${DOMAIN_URL}"
+Label="traefik.enable=true"
+Label="traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
+Label="traefik.http.routers.tinyauth.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.tinyauth.rule=Host(`auth.${DOMAIN_URL}`)"
 
-# Environment variables
-EnvironmentFile=.env
-
-# Volume for data persistence
+# Storage options
 Volume=%h/container-data/tinyauth/sessions/:/data:Z
 Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
 
-# Traefik labels
-Label="traefik.enable=true"
-Label="traefik.http.routers.tinyauth.rule=Host(`auth.${DOMAIN_URL}`)"
-Label="traefik.http.routers.tinyauth.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
+# Network options
+Network=shared-network
 
-# Glance Dashboard Labels
-Label="glance.name=Tinyauth"
-Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/tinyauth.webp"
-Label="glance.url=https://auth.${DOMAIN_URL}"
-Label="glance.description=Lightweight Authentication"
-Label="glance.id=tinyauth"
+# Environment options
+EnvironmentFile=.env
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
@@ -40,3 +39,4 @@ TimeoutStopSec=30s
 
 [Install]
 WantedBy=multi-user.target default.target
+

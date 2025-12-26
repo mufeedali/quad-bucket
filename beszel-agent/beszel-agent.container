@@ -1,6 +1,36 @@
 [Unit]
 Description=Beszel - Server Monitoring Agent
 
+[Container]
+# Base options
+AutoUpdate=registry
+ContainerName=beszel-agent
+Image=ghcr.io/henrygd/beszel/beszel-agent:0.17.0-alpine
+Pull=newer
+
+# Label options
+Label="glance.description=Monitoring Agent"
+Label="glance.icon=auto-invert sh:beszel-dark"
+Label="glance.id=beszel"
+Label="glance.name=Beszel"
+Label="glance.url=https://stats.${DOMAIN_URL}"
+
+# Storage options
+Volume=%h/container-data/beszel-agent:/var/lib/beszel-agent
+Volume=%t/podman/podman.sock:%t/podman/podman.sock:ro
+
+# Network options
+Network=host
+
+# Environment options
+Environment=DOCKER_HOST=unix://%t/podman/podman.sock
+EnvironmentFile=.env
+
+# Other options
+Group=1001
+User=1001
+UserNS=keep-id
+
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -10,27 +40,3 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
-[Container]
-ContainerName=beszel-agent
-Image=ghcr.io/henrygd/beszel/beszel-agent:latest
-AutoUpdate=registry
-Pull=newer
-
-User=1001
-Group=1001
-UserNS=keep-id
-
-EnvironmentFile=.env
-Environment=DOCKER_HOST=unix://%t/podman/podman.sock
-
-Network=host
-
-Volume=%h/container-data/beszel-agent:/var/lib/beszel-agent
-Volume=%t/podman/podman.sock:%t/podman/podman.sock:ro
-
-# Glance Dashboard Labels
-Label="glance.name=Beszel"
-Label="glance.icon=auto-invert sh:beszel-dark"
-Label="glance.url=https://stats.${DOMAIN_URL}"
-Label="glance.description=Monitoring Agent"
-Label="glance.id=beszel"
