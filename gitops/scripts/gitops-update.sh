@@ -69,12 +69,22 @@ for file in $CHANGED_FILES; do
     FILENAME=$(basename "$file")
     SERVICE_NAME="${FILENAME%.*}.service"
 
-    echo "[$TIMESTAMP] RESTARTING: $SERVICE_NAME"
+    echo "[$TIMESTAMP] Processing: $SERVICE_NAME"
 
-    if systemctl --user try-restart "$SERVICE_NAME"; then
-        echo "[$TIMESTAMP] SUCCESS: $SERVICE_NAME restarted."
+    if systemctl --user is-failed --quiet "$SERVICE_NAME"; then
+        echo "[$TIMESTAMP] STATUS: $SERVICE_NAME is in 'failed' state. Attempting full restart..."
+        if systemctl --user restart "$SERVICE_NAME"; then
+             echo "[$TIMESTAMP] SUCCESS: $SERVICE_NAME restarted (recovered from failed state)."
+        else
+             echo "[$TIMESTAMP] ERROR: Failed to restart $SERVICE_NAME"
+        fi
     else
-        echo "[$TIMESTAMP] ERROR: Failed to restart $SERVICE_NAME"
+        echo "[$TIMESTAMP] STATUS: $SERVICE_NAME is not failed. Attempting try-restart..."
+        if systemctl --user try-restart "$SERVICE_NAME"; then
+            echo "[$TIMESTAMP] SUCCESS: $SERVICE_NAME try-restarted."
+        else
+            echo "[$TIMESTAMP] ERROR: Failed to try-restart $SERVICE_NAME"
+        fi
     fi
 done
 
