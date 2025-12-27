@@ -5,7 +5,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-LOG_DIR="$SCRIPT_DIR/logs"
+LOG_DIR="$(dirname "$SCRIPT_DIR")/logs"
 mkdir -p "$LOG_DIR"
 LOG_FILE="$LOG_DIR/deploy.log"
 ARCHIVE_FILE="$LOG_DIR/deploy.log.old"
