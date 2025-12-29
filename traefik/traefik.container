@@ -7,7 +7,7 @@ Requires=http.socket https.socket tinyauth.service
 # Base options
 AutoUpdate=registry
 ContainerName=traefik
-Image=docker.io/library/traefik:v3.6.5
+Image=docker.io/library/traefik:v3.6.6
 Pull=newer
 
 # Label options
