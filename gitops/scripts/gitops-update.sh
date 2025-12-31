@@ -60,7 +60,11 @@ fi
 echo "[$TIMESTAMP] Changes detected in: $(echo $CHANGED_FILES | xargs)"
 
 # --- 6. Apply & Restart ---
+echo "[$TIMESTAMP] Merging changes from origin/main..."
 git merge origin/main
+
+echo "[$TIMESTAMP] Pushing changes to GitHub mirror..."
+git push github main
 
 echo "[$TIMESTAMP] Reloading systemd daemon..."
 systemctl --user daemon-reload
@@ -86,6 +90,9 @@ for file in $CHANGED_FILES; do
             echo "[$TIMESTAMP] ERROR: Failed to try-restart $SERVICE_NAME"
         fi
     fi
+
+    echo "[$TIMESTAMP] Cleaning up unused Podman resources..."
+    podman system prune -a
 done
 
 echo "[$TIMESTAMP] Update Batch Complete."

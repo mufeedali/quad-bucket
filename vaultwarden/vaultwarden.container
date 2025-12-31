@@ -1,0 +1,52 @@
+[Unit]
+Description=Vaultwarden - Password Manager
+
+[Container]
+# Base options
+AutoUpdate=registry
+ContainerName=vaultwarden
+Image=ghcr.io/dani-garcia/vaultwarden:1.35.1
+Pull=newer
+
+# Label options
+Label="glance.description=Password Manager"
+Label="glance.icon=si:vaultwarden"
+Label="glance.id=vaultwarden"
+Label="glance.name=Vaultwarden"
+Label="glance.url=https://vault.${DOMAIN_URL}"
+Label="traefik.enable=true"
+Label="traefik.http.routers.vaultwarden.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.vaultwarden.rule=Host(`vault.${DOMAIN_URL}`)"
+
+# Storage options
+Volume=%h/container-data/vaultwarden/:/data/
+Volume=./container-secrets/:/run/vault-secrets/:ro
+
+# Network options
+Network=shared-network
+
+# Environment options
+Environment=ADMIN_TOKEN_FILE=/run/vault-secrets/vaultwarden-admin-token
+Environment=SIGNUPS_VERIFY=true
+Environment=DOMAIN=https://vault.${DOMAIN_URL}
+# SMTP
+Environment=SMTP_HOST_FILE=/run/vault-secrets/vaultwarden-smtp-host
+Environment=SMTP_SECURITY=force_tls
+Environment=SMTP_PORT=465
+Environment=SMTP_FROM=vault-${SMTP_FROM_TEMPLATE}
+Environment=SMTP_USERNAME_FILE=/run/vault-secrets/vaultwarden-smtp-username
+Environment=SMTP_PASSWORD_FILE=/run/vault-secrets/vaultwarden-smtp-password
+# Mobile Push
+Environment=PUSH_ENABLED=true
+Environment=PUSH_INSTALLATION_ID_FILE=/run/vault-secrets/vaultwarden-push-id
+Environment=PUSH_INSTALLATION_KEY_FILE=/run/vault-secrets/vaultwarden-push-key
+EnvironmentFile=.env
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target

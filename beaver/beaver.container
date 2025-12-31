@@ -11,26 +11,31 @@ TimeoutStopSec=30s
 WantedBy=multi-user.target default.target
 
 [Container]
+# Container properties
 ContainerName=beaver
 Image=docker.io/daya0576/beaverhabits:latest
 AutoUpdate=registry
 Pull=newer
 
+# Environment options
 EnvironmentFile=.env
 
+# User options
 UserNS=keep-id:uid=%U,gid=%G
 
+# Network options
 Network=shared-network
 
+# Volume binds
 Volume=%h/container-data/beaver:/app/.user/
 
-# Traefik labels
+# Traefik Labels
 Label="traefik.enable=true"
 Label="traefik.http.routers.beaver.rule=Host(`habits.${DOMAIN_URL}`)"
 Label="traefik.http.routers.beaver.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.routers.beaver.middlewares=tinyauth"
 
-# Glance Dashboard Labels
+# Glance Labels
 Label="glance.name=Beaver Habits"
 Label="glance.icon=auto-invert sh:beaver-habit-tracker-dark"
 Label="glance.url=https://habits.${DOMAIN_URL}"

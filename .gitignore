@@ -3,10 +3,13 @@
 **/container-data/
 **/container-config/
 **/container-logs/
+**/container-secrets/
 
+# GitOps trigger directories
 gitops/triggers/*
 !gitops/triggers/.gitkeep
 
+# GitOps logs
 gitops/logs/*
 !gitops/logs/.gitkeep
 

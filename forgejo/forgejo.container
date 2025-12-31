@@ -41,7 +41,8 @@ Environment=FORGEJO__server__SSH_DOMAIN=src.${DOMAIN_URL}
 Environment=FORGEJO__server__SSH_LISTEN_PORT=2222
 Environment=FORGEJO__server__SSH_PORT=2222
 Environment=FORGEJO__server__START_SSH_SERVER=true
-Environment=FORGEJO__service__ENABLE_INTERNAL_SIGNIN=true
+Environment=FORGEJO__service__ENABLE_NOTIFY_MAIL=true
+Environment=FORGEJO__service__ENABLE_INTERNAL_SIGNIN=false
 EnvironmentFile=.env
 
 # Other options
