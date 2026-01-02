@@ -5,7 +5,7 @@ Description=BentoPDF - PDF Tools
 # Base options
 AutoUpdate=registry
 ContainerName=bentopdf
-Image=ghcr.io/alam00000/bentopdf-simple:v1.15.3
+Image=ghcr.io/alam00000/bentopdf-simple:v1.15.4
 Pull=newer
 
 # Label options
