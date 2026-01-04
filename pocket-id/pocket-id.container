@@ -5,7 +5,7 @@ Description=Pocket ID - OIDC Auth
 # Base options
 AutoUpdate=registry
 ContainerName=pocket-id
-Image=ghcr.io/pocket-id/pocket-id:v1.16.0
+Image=ghcr.io/pocket-id/pocket-id:v2.1.0
 Pull=newer
 
 # Label options
