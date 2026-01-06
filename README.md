@@ -6,9 +6,10 @@ I also make use of some compose stacks: [`compose-bucket`](https://github.com/mu
 
 ## Structure
 
-- Pod dirs: `actual/`, `beaver/`, etc.
+- Service-based dirs: `actual/`, `beaver/`, etc.
   - `<pod>.container`: Quadlet unit
-  - `container-data/`: Data/config
+  - `container-data/`: Data
+  - `container-config/`: Config
   - `.env`: Private vars
   - `.env.example`: Template
 
@@ -21,16 +22,16 @@ I also make use of some compose stacks: [`compose-bucket`](https://github.com/mu
 
 ## Management
 
-- Start: `systemctl --user start <pod>.container`
-- Stop: `systemctl --user stop <pod>.container`
-- Status: `systemctl --user status <pod>.container`
-- Enable: `systemctl --user enable <pod>.container`
+- Start: `systemctl --user start <service>.container`
+- Stop: `systemctl --user stop <service>.container`
+- Status: `systemctl --user status <service>.container`
+- Enable: `systemctl --user enable <service>.container`
 
 ## Dev
 
-- Update `.env.example` files with `python3 generate-examples.py`
+- Update `.env.example` files with `qh generate env` (quadlet-helper)
 
 ### Traefik
 
-- Update Cloudflare IPs in `traefik.yaml` with `traefik/cloudflare-updater/update-cloudflare-ips.py`. Automate using timer and service as you see fit.
-- Update `traefik.yaml.example` file with `python3 generate-traefik-example.py`.
+- Update Cloudflare IPs in `traefik.yaml` with `qh cloudflare run`. Automate using `qh cloudflare install`.
+- Update `traefik.yaml.example` file with `qh generate traefik`.
