@@ -7,7 +7,7 @@ Wants=network-online.target
 # Base options
 AutoUpdate=registry
 ContainerName=forgejo
-Image=codeberg.org/forgejo/forgejo:13.0.3-rootless
+Image=codeberg.org/forgejo/forgejo:13.0.4-rootless
 Pull=newer
 
 # Label options
