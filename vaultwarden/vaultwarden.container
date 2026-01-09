@@ -5,7 +5,7 @@ Description=Vaultwarden - Password Manager
 # Base options
 AutoUpdate=registry
 ContainerName=vaultwarden
-Image=ghcr.io/dani-garcia/vaultwarden:1.35.1
+Image=ghcr.io/dani-garcia/vaultwarden:1.35.2
 Pull=newer
 
 # Label options
