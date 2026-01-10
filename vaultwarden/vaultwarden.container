@@ -40,7 +40,6 @@ Environment=SMTP_PASSWORD_FILE=/run/vault-secrets/vaultwarden-smtp-password
 Environment=PUSH_ENABLED=true
 Environment=PUSH_INSTALLATION_ID_FILE=/run/vault-secrets/vaultwarden-push-id
 Environment=PUSH_INSTALLATION_KEY_FILE=/run/vault-secrets/vaultwarden-push-key
-EnvironmentFile=.env
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
