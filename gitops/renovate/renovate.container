@@ -4,7 +4,7 @@ After=network-online.target
 
 [Container]
 # Base options
-Image=ghcr.io/renovatebot/renovate:42.80
+Image=ghcr.io/renovatebot/renovate:42.81
 
 # Storage options
 Volume=%h/container-data/renovate:/tmp/renovate
