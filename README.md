@@ -13,6 +13,33 @@ I also make use of some compose stacks: [`compose-bucket`](https://github.com/mu
   - `.env`: Private vars
   - `.env.example`: Template
 
+### Container File Format
+
+All `.container` files follow this structure:
+
+```
+[Unit]
+[Service]
+[Install]
+[Container]
+  # Container properties
+    ContainerName -> Image -> AutoUpdate -> Pull
+  # Environment options
+    Environment vars -> EnvironmentFile
+  # User options
+    User -> Group -> UserNS
+  # Network options
+    Network -> NetworkAlias -> PublishPort
+  # Volume binds
+    Data -> Config -> System files
+  # Traefik Labels
+    enable -> rule -> entrypoints -> middlewares -> services
+  # Glance Labels
+    name -> icon -> url -> description -> id
+```
+
+See `beaver.container` for reference.
+
 ## Setup
 
 1. Clone repo

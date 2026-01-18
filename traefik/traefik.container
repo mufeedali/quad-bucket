@@ -3,42 +3,6 @@ Description=Traefik - Reverse Proxy
 After=http.socket https.socket tinyauth.service
 Requires=http.socket https.socket tinyauth.service
 
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=traefik
-Image=docker.io/library/traefik:v3.6.7
-Pull=newer
-
-# Label options
-Label="glance.description=Reverse Proxy"
-Label="glance.icon=auto-invert sh:traefik-dark"
-Label="glance.id=traefik"
-Label="glance.name=Traefik"
-Label="glance.url=https://traefik.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.api.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.api.middlewares=tinyauth"
-Label="traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_URL}`)"
-Label="traefik.http.routers.api.service=api@internal"
-
-# Storage options
-Volume=%t/podman/podman.sock:/var/run/docker.sock
-Volume=./container-config/traefik/acme.json:/acme.json
-Volume=./container-config/traefik/traefik.yaml:/etc/traefik/traefik.yml
-
-# Network options
-Network=shared-network
-NetworkAlias=auth.${DOMAIN_URL}
-NetworkAlias=id.${DOMAIN_URL}
-
-# Environment options
-EnvironmentFile=.env
-
-# Other options
-Notify=true
-SecurityLabelDisable=true
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Sockets=http.socket https.socket
@@ -49,3 +13,38 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=traefik
+Image=docker.io/library/traefik:v3.6.7
+AutoUpdate=registry
+Pull=newer
+Notify=true
+SecurityLabelDisable=true
+
+# Environment options
+EnvironmentFile=.env
+
+# Network options
+Network=shared-network
+NetworkAlias=auth.${DOMAIN_URL}
+NetworkAlias=id.${DOMAIN_URL}
+
+# Volume binds
+Volume=%t/podman/podman.sock:/var/run/docker.sock
+Volume=./container-config/traefik/acme.json:/acme.json
+Volume=./container-config/traefik/traefik.yaml:/etc/traefik/traefik.yml
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_URL}`)"
+Label="traefik.http.routers.api.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.api.middlewares=tinyauth"
+Label="traefik.http.routers.api.service=api@internal"
+
+# Glance Labels
+Label="glance.name=Traefik"
+Label="glance.icon=auto-invert sh:traefik-dark"
+Label="glance.url=https://traefik.${DOMAIN_URL}"
+Label="glance.description=Reverse Proxy"
+Label="glance.id=traefik"

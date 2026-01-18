@@ -1,5 +1,6 @@
 [Unit]
 Description=Beaver - Habits tracker
+After=traefik.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env

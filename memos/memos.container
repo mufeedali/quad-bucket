@@ -1,5 +1,6 @@
 [Unit]
 Description=Memos - Note-taking
+After=pocket-id.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
@@ -11,26 +12,27 @@ TimeoutStopSec=30s
 WantedBy=multi-user.target default.target
 
 [Container]
+# Container properties
 ContainerName=memos
 Image=ghcr.io/usememos/memos:0.25.3
 AutoUpdate=registry
 Pull=newer
 
-# Volume for data persistence
-Volume=%h/container-data/memos:/var/opt/memos:Z
-
-# Network
-Network=shared-network
-
-# Environment variables
+# Environment options
 EnvironmentFile=.env
 
-# Traefik labels
+# Network options
+Network=shared-network
+
+# Volume binds
+Volume=%h/container-data/memos:/var/opt/memos:Z
+
+# Traefik Labels
 Label="traefik.enable=true"
 Label="traefik.http.routers.memos.rule=Host(`memos.${DOMAIN_URL}`)"
 Label="traefik.http.routers.memos.entrypoints=web-secure,web-secure-internal"
 
-# Glance Dashboard Labels
+# Glance Labels
 Label="glance.name=Memos"
 Label="glance.icon=auto-invert https://cdn.jsdelivr.net/gh/selfhst/icons/webp/memos.webp"
 Label="glance.url=https://memos.${DOMAIN_URL}"

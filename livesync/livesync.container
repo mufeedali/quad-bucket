@@ -11,27 +11,32 @@ TimeoutStopSec=30s
 WantedBy=multi-user.target default.target
 
 [Container]
+# Container properties
 ContainerName=livesync
 Image=docker.io/apache/couchdb:3.5.1
 AutoUpdate=registry
 Pull=newer
 
+# Environment options
 EnvironmentFile=.env
 
-Network=shared-network
-
+# User options
 UserNS=keep-id:uid=5984,gid=5984
 
+# Network options
+Network=shared-network
+
+# Volume binds
 Volume=%h/container-data/livesync/data:/opt/couchdb/data
 Volume=%h/container-data/livesync/config:/opt/couchdb/etc/local.d
 
-# Traefik labels
+# Traefik Labels
 Label="traefik.enable=true"
 Label="traefik.http.routers.livesync.rule=Host(`livesync.${DOMAIN_URL}`)"
 Label="traefik.http.routers.livesync.entrypoints=web-secure,web-secure-internal"
 Label="traefik.http.services.livesync.loadbalancer.server.port=5984"
 
-# Glance Dashboard Labels
+# Glance Labels
 Label="glance.name=CouchDB"
 Label="glance.icon=si:apachecouchdb"
 Label="glance.url=https://livesync.${DOMAIN_URL}"

@@ -34,8 +34,8 @@ Volume=%h/container-data/beszel-agent:/var/lib/beszel-agent
 Volume=%t/podman/podman.sock:%t/podman/podman.sock:ro
 
 # Glance Labels
-Label="glance.description=Monitoring Agent"
-Label="glance.icon=auto-invert sh:beszel-dark"
-Label="glance.id=beszel"
 Label="glance.name=Beszel"
+Label="glance.icon=auto-invert sh:beszel-dark"
 Label="glance.url=https://stats.${DOMAIN_URL}"
+Label="glance.description=Monitoring Agent"
+Label="glance.id=beszel"

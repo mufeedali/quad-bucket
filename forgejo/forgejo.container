@@ -2,34 +2,23 @@
 Description=Forgejo - Git hosting
 After=network-online.target
 Wants=network-online.target
+After=pocket-id.service
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
 
 [Container]
-# Base options
-AutoUpdate=registry
+# Container properties
 ContainerName=forgejo
 Image=codeberg.org/forgejo/forgejo:14.0.1-rootless
+AutoUpdate=registry
 Pull=newer
-
-# Label options
-Label="glance.description=Git Hosting"
-Label="glance.icon=auto-invert sh:forgejo-dark"
-Label="glance.id=forgejo"
-Label="glance.name=Forgejo"
-Label="glance.url=https://git.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.forgejo.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.forgejo.rule=Host(`git.${DOMAIN_URL}`)"
-Label="traefik.http.services.forgejo.loadbalancer.server.port=3000"
-
-# Storage options
-Volume=%h/container-data/forgejo/:/var/lib/gitea
-Volume=./container-config/forgejo/:/etc/gitea
-Volume=/etc/localtime:/etc/localtime:ro
-Volume=/etc/timezone:/etc/timezone:ro
-
-# Network options
-Network=shared-network
-PublishPort=2222:2222
 
 # Environment options
 Environment=FORGEJO__oauth2_client__UPDATE_AVATAR=true
@@ -45,16 +34,29 @@ Environment=FORGEJO__service__ENABLE_NOTIFY_MAIL=true
 Environment=FORGEJO__service__ENABLE_INTERNAL_SIGNIN=false
 EnvironmentFile=.env
 
-# Other options
+# User options
 User=${USER_UID}:${USER_GID}
 UserNS=keep-id
 
-[Service]
-EnvironmentFile=%h/.config/containers/systemd/.env
-Restart=on-abnormal
-TimeoutStartSec=60s
-TimeoutStopSec=30s
+# Network options
+Network=shared-network
+PublishPort=2222:2222
 
-[Install]
-WantedBy=multi-user.target default.target
+# Volume binds
+Volume=%h/container-data/forgejo/:/var/lib/gitea
+Volume=./container-config/forgejo/:/etc/gitea
+Volume=/etc/localtime:/etc/localtime:ro
+Volume=/etc/timezone:/etc/timezone:ro
 
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.forgejo.rule=Host(`git.${DOMAIN_URL}`)"
+Label="traefik.http.routers.forgejo.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.forgejo.loadbalancer.server.port=3000"
+
+# Glance Labels
+Label="glance.name=Forgejo"
+Label="glance.icon=auto-invert sh:forgejo-dark"
+Label="glance.url=https://git.${DOMAIN_URL}"
+Label="glance.description=Git Hosting"
+Label="glance.id=forgejo"

@@ -1,34 +1,6 @@
 [Unit]
 Description=Code Server - Remote VS Code
-
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=code-server
-Image=lscr.io/linuxserver/code-server:latest
-Pull=newer
-
-# Label options
-Label="glance.description=Remote Dev Environment"
-Label="glance.icon=si:coder"
-Label="glance.id=code-server"
-Label="glance.name=Remote Code"
-Label="glance.url=https://code.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.code-server.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.code-server.middlewares=tinyauth"
-Label="traefik.http.routers.code-server.rule=Host(`code.${DOMAIN_URL}`)"
-
-# Storage options
-Volume=%h/container-data/code-server/config/.ssh:/root/.ssh/:ro
-Volume=%h/container-data/code-server/config:/config
-Volume=%h:%h
-
-# Network options
-Network=shared-network
-
-# Environment options
-EnvironmentFile=.env
+After=traefik.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
@@ -39,3 +11,33 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=code-server
+Image=lscr.io/linuxserver/code-server:latest
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+
+# Network options
+Network=shared-network
+
+# Volume binds
+Volume=%h/container-data/code-server/config/.ssh:/root/.ssh/:ro
+Volume=%h/container-data/code-server/config:/config
+Volume=%h:%h
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.code-server.rule=Host(`code.${DOMAIN_URL}`)"
+Label="traefik.http.routers.code-server.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.routers.code-server.middlewares=tinyauth"
+
+# Glance Labels
+Label="glance.name=Remote Code"
+Label="glance.icon=si:coder"
+Label="glance.url=https://code.${DOMAIN_URL}"
+Label="glance.description=Remote Dev Environment"
+Label="glance.id=code-server"

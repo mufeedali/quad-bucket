@@ -2,20 +2,6 @@
 Description=Renovate Bot
 After=network-online.target
 
-[Container]
-# Base options
-Image=ghcr.io/renovatebot/renovate:42.84
-
-# Storage options
-Volume=%h/container-data/renovate:/tmp/renovate
-
-# Environment options
-Environment=LOG_LEVEL=info
-Environment=RENOVATE_AUTODISCOVER=true
-Environment=RENOVATE_ENDPOINT=https://git.${DOMAIN_URL}/api/v1
-Environment=RENOVATE_PLATFORM=forgejo
-EnvironmentFile=.env
-
 [Service]
 Type=oneshot
 TimeoutStartSec=10m
@@ -24,3 +10,16 @@ EnvironmentFile=%h/.config/containers/systemd/.env
 [Install]
 WantedBy=default.target
 
+[Container]
+# Container properties
+Image=ghcr.io/renovatebot/renovate:42.84
+
+# Environment options
+Environment=LOG_LEVEL=info
+Environment=RENOVATE_AUTODISCOVER=true
+Environment=RENOVATE_ENDPOINT=https://git.${DOMAIN_URL}/api/v1
+Environment=RENOVATE_PLATFORM=forgejo
+EnvironmentFile=.env
+
+# Volume binds
+Volume=%h/container-data/renovate:/tmp/renovate

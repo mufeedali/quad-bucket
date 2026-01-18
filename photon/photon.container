@@ -11,19 +11,21 @@ TimeoutStopSec=30s
 WantedBy=multi-user.target default.target
 
 [Container]
+# Container properties
 ContainerName=photon
 Image=ghcr.io/xyphyn/photon:v2.2.2
 AutoUpdate=registry
 Pull=newer
 
+# Network options
 Network=shared-network
 
-# Traefik labels
+# Traefik Labels
 Label="traefik.enable=true"
 Label="traefik.http.routers.photon.rule=Host(`photon.${DOMAIN_URL}`)"
 Label="traefik.http.routers.photon.entrypoints=web-secure,web-secure-internal"
 
-# Glance Dashboard Labels
+# Glance Labels
 Label="glance.name=Photon"
 Label="glance.icon=auto-invert https://raw.githubusercontent.com/Xyphyn/photon/refs/heads/main/static/img/logo-isolated-dynamic.svg"
 Label="glance.url=https://photon.${DOMAIN_URL}"

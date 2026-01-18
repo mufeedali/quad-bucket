@@ -1,29 +1,6 @@
 [Unit]
 Description=Collabora - Office Suite
 
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=collabora
-Image=docker.io/collabora/code:latest
-Pull=newer
-
-# Label options
-Label="glance.description=Office for Nextcloud"
-Label="glance.icon=si:collaboraonline"
-Label="glance.id=collabora"
-Label="glance.name=Collabora"
-Label="glance.url=https://office.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.collabora.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.collabora.rule=Host(`office.${DOMAIN_URL}`)"
-
-# Network options
-Network=shared-network
-
-# Environment options
-EnvironmentFile=.env
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -33,3 +10,27 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=collabora
+Image=docker.io/collabora/code:latest
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+
+# Network options
+Network=shared-network
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.collabora.rule=Host(`office.${DOMAIN_URL}`)"
+Label="traefik.http.routers.collabora.entrypoints=web-secure,web-secure-internal"
+
+# Glance Labels
+Label="glance.name=Collabora"
+Label="glance.icon=si:collaboraonline"
+Label="glance.url=https://office.${DOMAIN_URL}"
+Label="glance.description=Office for Nextcloud"
+Label="glance.id=collabora"

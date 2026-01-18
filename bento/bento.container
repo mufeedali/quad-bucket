@@ -1,27 +1,6 @@
 [Unit]
 Description=BentoPDF - PDF Tools
 
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=bentopdf
-Image=ghcr.io/alam00000/bentopdf-simple:v1.15.4
-Pull=newer
-
-# Label options
-Label="glance.description=PDF Tools"
-Label="glance.icon=auto-invert sh:bentopdf-dark"
-Label="glance.id=bentopdf"
-Label="glance.name=BentoPDF"
-Label="glance.url=https://bento.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.bentopdf.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.bentopdf.rule=Host(`bento.${DOMAIN_URL}`)"
-Label="traefik.http.services.bentopdf.loadbalancer.server.port=8080"
-
-# Network options
-Network=shared-network
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -31,3 +10,25 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=bentopdf
+Image=ghcr.io/alam00000/bentopdf-simple:v1.15.4
+AutoUpdate=registry
+Pull=newer
+
+# Network options
+Network=shared-network
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.bentopdf.rule=Host(`bento.${DOMAIN_URL}`)"
+Label="traefik.http.routers.bentopdf.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.bentopdf.loadbalancer.server.port=8080"
+
+# Glance Labels
+Label="glance.name=BentoPDF"
+Label="glance.icon=auto-invert sh:bentopdf-dark"
+Label="glance.url=https://bento.${DOMAIN_URL}"
+Label="glance.description=PDF Tools"
+Label="glance.id=bentopdf"

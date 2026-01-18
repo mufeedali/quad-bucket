@@ -3,34 +3,6 @@ Description=Tinyauth - Lightweight Authentication
 After=pocket-id.service
 Requires=pocket-id.service
 
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=tinyauth
-Image=ghcr.io/steveiliop56/tinyauth:v4.1
-Pull=newer
-
-# Label options
-Label="glance.description=Lightweight Authentication"
-Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/tinyauth.webp"
-Label="glance.id=tinyauth"
-Label="glance.name=Tinyauth"
-Label="glance.url=https://auth.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
-Label="traefik.http.routers.tinyauth.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.tinyauth.rule=Host(`auth.${DOMAIN_URL}`)"
-
-# Storage options
-Volume=%h/container-data/tinyauth/sessions/:/data:Z
-Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
-
-# Network options
-Network=shared-network
-
-# Environment options
-EnvironmentFile=.env
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -40,3 +12,32 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=tinyauth
+Image=ghcr.io/steveiliop56/tinyauth:v4.1
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+
+# Network options
+Network=shared-network
+
+# Volume binds
+Volume=%h/container-data/tinyauth/sessions/:/data:Z
+Volume=%t/podman/podman.sock:/var/run/docker.sock:ro
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.tinyauth.rule=Host(`auth.${DOMAIN_URL}`)"
+Label="traefik.http.routers.tinyauth.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.middlewares.tinyauth.forwardauth.address=http://tinyauth:3000/api/auth/traefik"
+
+# Glance Labels
+Label="glance.name=Tinyauth"
+Label="glance.icon=https://cdn.jsdelivr.net/gh/selfhst/icons/webp/tinyauth.webp"
+Label="glance.url=https://auth.${DOMAIN_URL}"
+Label="glance.description=Lightweight Authentication"
+Label="glance.id=tinyauth"

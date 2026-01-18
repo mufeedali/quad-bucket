@@ -1,43 +1,6 @@
 [Unit]
 Description=Pocket ID - OIDC Auth
 
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=pocket-id
-Image=ghcr.io/pocket-id/pocket-id:v2.2.0
-Pull=newer
-
-# Label options
-Label="glance.description=OIDC Auth"
-Label="glance.icon=auto-invert sh:pocket-id-dark"
-Label="glance.id=pocket-id"
-Label="glance.name=Pocket ID"
-Label="glance.url=https://id.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.pocket-id.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.pocket-id.rule=Host(`id.${DOMAIN_URL}`)"
-Label="traefik.http.services.pocket-id.loadbalancer.server.port=5000"
-
-# Storage options
-Volume=%h/container-data/pocket-id:/app/data
-
-# Network options
-Network=shared-network
-
-# Environment options
-EnvironmentFile=.env
-
-# Healthcheck options
-HealthCmd=["/app/pocket-id","healthcheck"]
-HealthInterval=1m30s
-HealthRetries=2
-HealthStartPeriod=10s
-HealthTimeout=5s
-
-# Other options
-UserNS=keep-id
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 EnvironmentFile=%h/.config/containers/systemd/pocket-id/.env
@@ -48,3 +11,39 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=pocket-id
+Image=ghcr.io/pocket-id/pocket-id:v2.2.0
+AutoUpdate=registry
+Pull=newer
+HealthCmd=["/app/pocket-id","healthcheck"]
+HealthInterval=1m30s
+HealthRetries=2
+HealthStartPeriod=10s
+HealthTimeout=5s
+
+# Environment options
+EnvironmentFile=.env
+
+# User options
+UserNS=keep-id
+
+# Network options
+Network=shared-network
+
+# Volume binds
+Volume=%h/container-data/pocket-id:/app/data
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.pocket-id.rule=Host(`id.${DOMAIN_URL}`)"
+Label="traefik.http.routers.pocket-id.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.pocket-id.loadbalancer.server.port=5000"
+
+# Glance Labels
+Label="glance.name=Pocket ID"
+Label="glance.icon=auto-invert sh:pocket-id-dark"
+Label="glance.url=https://id.${DOMAIN_URL}"
+Label="glance.description=OIDC Auth"
+Label="glance.id=pocket-id"

@@ -1,34 +1,6 @@
 [Unit]
 Description=Dir2OPDS - Books Hosting
 
-[Container]
-# Base options
-AutoUpdate=registry
-ContainerName=dir2opds
-Exec=-group-formats -author-from-folder -hide-dot-files
-Image=ghcr.io/mufeedali/dir2opds:latest
-Pull=newer
-
-# Label options
-Label="glance.description=Books Hosting"
-Label="glance.icon=mdi:bookshelf"
-Label="glance.id=dir2opds"
-Label="glance.name=Dir2OPDS"
-Label="glance.url=https://opds.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.dir2opds.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.dir2opds.rule=Host(`opds.${DOMAIN_URL}`)"
-Label="traefik.http.services.dir2opds.loadbalancer.server.port=8080"
-
-# Storage options
-Volume=%h/Books:/books:ro,Z
-
-# Network options
-Network=shared-network
-
-# Other options
-UserNS=keep-id
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -38,3 +10,32 @@ TimeoutStopSec=30s
 [Install]
 WantedBy=multi-user.target default.target
 
+[Container]
+# Container properties
+ContainerName=dir2opds
+Image=ghcr.io/mufeedali/dir2opds:latest
+AutoUpdate=registry
+Pull=newer
+Exec=-group-formats -author-from-folder -hide-dot-files
+
+# User options
+UserNS=keep-id
+
+# Network options
+Network=shared-network
+
+# Volume binds
+Volume=%h/Books:/books:ro,Z
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.dir2opds.rule=Host(`opds.${DOMAIN_URL}`)"
+Label="traefik.http.routers.dir2opds.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.dir2opds.loadbalancer.server.port=8080"
+
+# Glance Labels
+Label="glance.name=Dir2OPDS"
+Label="glance.icon=mdi:bookshelf"
+Label="glance.url=https://opds.${DOMAIN_URL}"
+Label="glance.description=Books Hosting"
+Label="glance.id=dir2opds"

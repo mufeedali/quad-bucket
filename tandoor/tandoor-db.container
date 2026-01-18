@@ -3,28 +3,6 @@ Description=Tandoor DB - Postgres instance for Tandoor
 Requires=tandoor-network.service
 After=tandoor-network.service
 
-[Container]
-# Base options
-ContainerName=tandoor-db
-Image=docker.io/library/postgres:18.1
-AutoUpdate=registry
-Pull=newer
-
-# Storage options
-Volume=%h/container-data/tandoor-db:/var/lib/postgresql
-
-# Network options
-Network=tandoor.network
-
-# Environment options
-EnvironmentFile=.env
-
-# Other options
-UserNS=keep-id:uid=999,gid=999
-
-Label="glance.parent=tandoor"
-Label="glance.name=DB"
-
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 Restart=on-abnormal
@@ -33,3 +11,26 @@ TimeoutStopSec=30s
 
 [Install]
 WantedBy=multi-user.target default.target
+
+[Container]
+# Container properties
+ContainerName=tandoor-db
+Image=docker.io/library/postgres:18.1
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+
+# User options
+UserNS=keep-id:uid=999,gid=999
+
+# Network options
+Network=tandoor.network
+
+# Volume binds
+Volume=%h/container-data/tandoor-db:/var/lib/postgresql
+
+# Glance Labels
+Label="glance.parent=tandoor"
+Label="glance.name=DB"

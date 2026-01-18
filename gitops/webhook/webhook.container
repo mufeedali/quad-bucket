@@ -2,46 +2,48 @@
 Description=Webhook Listener
 After=network-online.target
 
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
 [Container]
-# Base options
+# Container properties
 ContainerName=webhook
+Image=docker.io/almir/webhook:2.8.2
 Entrypoint=/bin/sh
 Exec=-c "sed 's/{{WEBHOOK_SECRET}}/'"$WEBHOOK_SECRET"'/' \
   /etc/webhook/hooks.tmpl > /etc/webhook/hooks.json && cat \
   /etc/webhook/hooks.json && /usr/local/bin/webhook -verbose \
   -hooks=/etc/webhook/hooks.json -hotreload"
-Image=docker.io/almir/webhook:2.8.2
 PodmanArgs=--tmpfs /etc/webhook:rw,size=64k,mode=1777
-
-# Label options
-Label="glance.description=GitOps Webhooks"
-Label="glance.icon=auto-invert sh:adnanh-webhook-dark"
-Label="glance.id=webhook"
-Label="glance.name=Webhook"
-Label="glance.url=https://git-hook.${DOMAIN_URL}"
-Label="traefik.enable=true"
-Label="traefik.http.routers.git-hook.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.routers.git-hook.rule=Host(`git-hook.${DOMAIN_URL}`)"
-Label="traefik.http.services.git-hook.loadbalancer.server.port=9000"
-
-# Storage options
-Volume=./hooks.json.tmpl:/etc/webhook/hooks.tmpl:ro
-Volume=./triggers:/triggers:Z
-
-# Network options
-Network=shared-network
 
 # Environment options
 EnvironmentFile=.env
 
-# Other options
+# User options
 User=0
 
-[Service]
-Restart=on-abnormal
-TimeoutStartSec=60s
-TimeoutStopSec=30s
-EnvironmentFile=%h/.config/containers/systemd/.env
+# Network options
+Network=shared-network
 
-[Install]
-WantedBy=multi-user.target default.target
+# Volume binds
+Volume=./hooks.json.tmpl:/etc/webhook/hooks.tmpl:ro
+Volume=./triggers:/triggers:Z
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.git-hook.rule=Host(`git-hook.${DOMAIN_URL}`)"
+Label="traefik.http.routers.git-hook.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.git-hook.loadbalancer.server.port=9000"
+
+# Glance Labels
+Label="glance.name=Webhook"
+Label="glance.icon=auto-invert sh:adnanh-webhook-dark"
+Label="glance.url=https://git-hook.${DOMAIN_URL}"
+Label="glance.description=GitOps Webhooks"
+Label="glance.id=webhook"
