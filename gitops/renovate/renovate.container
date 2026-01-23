@@ -12,7 +12,7 @@ WantedBy=default.target
 
 [Container]
 # Container properties
-Image=ghcr.io/renovatebot/renovate:42.88
+Image=ghcr.io/renovatebot/renovate:42.92
 
 # Environment options
 Environment=LOG_LEVEL=info
