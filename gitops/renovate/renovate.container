@@ -9,7 +9,7 @@ EnvironmentFile=%h/.config/containers/systemd/.env
 
 [Container]
 # Container properties
-Image=ghcr.io/renovatebot/renovate:42.93
+Image=ghcr.io/renovatebot/renovate:43.0
 
 # Environment options
 Environment=LOG_LEVEL=info
