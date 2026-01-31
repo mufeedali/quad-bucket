@@ -1,0 +1,45 @@
+[Unit]
+Description=Immich Database - PostgreSQL with vector extensions
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+EnvironmentFile=%h/.config/containers/systemd/immich/.env
+Restart=on-abnormal
+TimeoutStartSec=90s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+# Container properties
+ContainerName=immich-postgres
+Image=ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0@sha256:bcf63357191b76a916ae5eb93464d65c07511da41e3bf7a8416db519b40b1c23
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+Environment=POSTGRES_PASSWORD=${DB_PASSWORD}
+Environment=POSTGRES_USER=${DB_USERNAME}
+Environment=POSTGRES_DB=${DB_DATABASE_NAME}
+Environment=POSTGRES_INITDB_ARGS=--data-checksums
+
+# User options
+UserNS=keep-id:uid=999,gid=999
+
+# Network options
+Network=immich.network
+
+# Volume binds
+Volume=%h/container-data/immich/pgdata:/var/lib/postgresql/data
+
+# Health check
+HealthCmd=/usr/bin/pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE_NAME}
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+
+# Glance Labels
+Label="glance.parent=immich"
+Label="glance.name=DB"

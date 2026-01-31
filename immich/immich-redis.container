@@ -1,0 +1,31 @@
+[Unit]
+Description=Immich Redis - Cache service
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+# Container properties
+ContainerName=immich-redis
+Image=docker.io/valkey/valkey:8@sha256:81db6d39e1bba3b3ff32bd3a1b19a6d69690f94a3954ec131277b9a26b95b3aa
+AutoUpdate=registry
+Pull=newer
+
+# Network options
+Network=immich.network
+
+# Health check
+HealthCmd=redis-cli ping || exit 1
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+
+# Glance Labels
+Label="glance.parent=immich"
+Label="glance.name=Redis"

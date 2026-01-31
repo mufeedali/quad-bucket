@@ -1,7 +1,20 @@
 #!/bin/sh
-# Pre-commit hook to run `qh generate env`
-# It will only run if `qh` is installed and available in the PATH
+# Run qh generate env in hook mode; abort if qh exits 1.
 
-if command -v qh >/dev/null 2>&1; then
-    qh generate env
+if ! command -v qh >/dev/null 2>&1; then
+  exit 0
 fi
+
+qh generate env --hook >/dev/null 2>&1
+rc=$?
+if [ "$rc" -eq 0 ]; then
+  exit 0
+fi
+if [ "$rc" -eq 1 ]; then
+  echo "qh generated or modified files. Review, stage, and re-run commit."
+  git --no-pager status --short
+  exit 1
+fi
+
+echo "qh failed (exit $rc)."
+exit $rc

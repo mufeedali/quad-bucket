@@ -1,0 +1,46 @@
+[Unit]
+Description=Immich Server - Photo and video management
+Requires=immich-redis.service
+After=immich-redis.service
+Requires=immich-database.service
+After=immich-database.service
+After=immich-machine-learning.service
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+EnvironmentFile=%h/.config/containers/systemd/immich/.env
+Restart=on-abnormal
+TimeoutStartSec=120s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+# Container properties
+ContainerName=immich-server
+Image=ghcr.io/immich-app/immich-server:v2.5.2
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+
+# Network options
+Network=shared-network
+Network=immich.network
+
+# Volume binds
+Volume=${UPLOAD_LOCATION}:/data
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.immich.rule=Host(`photos.${DOMAIN_URL}`)"
+Label="traefik.http.routers.immich.entrypoints=web-secure,web-secure-internal"
+
+# Glance Labels
+Label="glance.name=Immich"
+Label="glance.icon=si:immich"
+Label="glance.url=https://photos.${DOMAIN_URL}"
+Label="glance.description=Image & video management"
+Label="glance.id=immich"

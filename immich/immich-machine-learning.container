@@ -1,0 +1,31 @@
+[Unit]
+Description=Immich Machine Learning - ML processing service
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=180s
+TimeoutStopSec=60s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+# Container properties
+ContainerName=immich-machine-learning
+Image=ghcr.io/immich-app/immich-machine-learning:v2.5.2
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+EnvironmentFile=.env
+
+# Network options
+Network=immich.network
+
+# Volume binds
+Volume=%h/container-data/immich/model-cache:/cache
+
+# Glance Labels
+Label="glance.parent=immich"
+Label="glance.name=ML"
