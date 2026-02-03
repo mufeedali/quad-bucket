@@ -54,9 +54,19 @@ See `beaver.container` for reference.
 - Status: `systemctl --user status <service>.container`
 - Enable: `systemctl --user enable <service>.container`
 
+## GitOps
+
+I auto-update container images via Renovate + auto-deploy on push. Well, not truly "auto" since I merge manually to make sure there's some level of stability via pinning.
+
+```
+Renovate (hourly + on-push) -> PR with update -> Manual Merge via Web UI or Mobile app
+-> Update .container images -> Forgejo Push Trigger -> Webhook
+-> touch trigger -> systemd .path -> Pull changes -> Restart relevant containers
+```
+
 ## Dev
 
-- Update `.env.example` files with `qh generate env` (quadlet-helper)
+- Update `.env.example` files with `qh generate env` (quadlet-helper). There's also a pre-commit hook in the .githooks directory.
 
 ### Traefik
 
