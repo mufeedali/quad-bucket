@@ -7,7 +7,7 @@ I also make use of some compose stacks: [`compose-bucket`](https://github.com/mu
 ## Structure
 
 - Service-based dirs: `actual/`, `beaver/`, etc.
-  - `<pod>.container`: Quadlet unit
+  - `<container-name>.container`: Quadlet unit
   - `container-data/`: Data
   - `container-config/`: Config
   - `.env`: Private vars
