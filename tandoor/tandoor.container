@@ -18,7 +18,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=tandoor
-Image=ghcr.io/tandoorrecipes/recipes:2.4.2
+Image=ghcr.io/tandoorrecipes/recipes:2.5.0
 AutoUpdate=registry
 Pull=newer
 
