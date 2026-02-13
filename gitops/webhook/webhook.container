@@ -14,7 +14,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=webhook
-Image=docker.io/almir/webhook:2.8.2
+Image=docker.io/almir/webhook:2.8.3
 Entrypoint=/bin/sh
 Exec=-c "sed 's/{{WEBHOOK_SECRET}}/'"$WEBHOOK_SECRET"'/' \
   /etc/webhook/hooks.tmpl > /etc/webhook/hooks.json && cat \
