@@ -90,10 +90,10 @@ for file in $CHANGED_FILES; do
             echo "[$TIMESTAMP] ERROR: Failed to try-restart $SERVICE_NAME"
         fi
     fi
-
-    echo "[$TIMESTAMP] Cleaning up unused Podman resources..."
-    podman system prune -a
 done
+
+echo "[$TIMESTAMP] Cleaning up unused Podman resources..."
+podman system prune -a -f
 
 echo "[$TIMESTAMP] Update Batch Complete."
 echo "------------------------------------------------------"
