@@ -14,7 +14,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=papra
-Image=ghcr.io/papra-hq/papra:26.2.1-rootless
+Image=ghcr.io/papra-hq/papra:26.2.2-rootless
 AutoUpdate=registry
 Pull=newer
 
