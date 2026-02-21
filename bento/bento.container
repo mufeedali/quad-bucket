@@ -13,7 +13,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=bentopdf
-Image=ghcr.io/alam00000/bentopdf-simple:2.2.1
+Image=ghcr.io/alam00000/bentopdf-simple:2.3.1
 AutoUpdate=registry
 Pull=newer
 
