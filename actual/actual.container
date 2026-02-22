@@ -14,7 +14,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=actual
-Image=ghcr.io/actualbudget/actual:26.2.0
+Image=ghcr.io/actualbudget/actual:26.2.1
 AutoUpdate=registry
 Pull=newer
 
