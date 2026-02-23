@@ -14,7 +14,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=memos
-Image=ghcr.io/usememos/memos:0.26.1
+Image=ghcr.io/usememos/memos:0.26.2
 AutoUpdate=registry
 Pull=newer
 
