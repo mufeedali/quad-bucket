@@ -13,7 +13,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=photon
-Image=ghcr.io/xyphyn/photon:v2.2.2
+Image=ghcr.io/xyphyn/photon:v2.3.0
 AutoUpdate=registry
 Pull=newer
 
