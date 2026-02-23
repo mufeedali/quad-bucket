@@ -14,7 +14,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=pocket-id
-Image=ghcr.io/pocket-id/pocket-id:v2.2.0
+Image=ghcr.io/pocket-id/pocket-id:v2.3.0
 AutoUpdate=registry
 Pull=newer
 HealthCmd=["/app/pocket-id","healthcheck"]
