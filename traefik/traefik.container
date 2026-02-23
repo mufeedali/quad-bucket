@@ -16,7 +16,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=traefik
-Image=docker.io/library/traefik:v3.6.8
+Image=docker.io/library/traefik:v3.6.9
 AutoUpdate=registry
 Pull=newer
 Notify=true
