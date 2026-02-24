@@ -39,7 +39,7 @@ Volume=%h/container-data/pocket-id:/app/data
 Label="traefik.enable=true"
 Label="traefik.http.routers.pocket-id.rule=Host(`id.${DOMAIN_URL}`)"
 Label="traefik.http.routers.pocket-id.entrypoints=web-secure,web-secure-internal"
-Label="traefik.http.services.pocket-id.loadbalancer.server.port=5000"
+Label="traefik.http.services.pocket-id.loadbalancer.server.port=1411"
 
 # Glance Labels
 Label="glance.name=Pocket ID"

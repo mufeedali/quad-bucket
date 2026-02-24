@@ -34,6 +34,7 @@ NetworkAlias=id.${DOMAIN_URL}
 Volume=%t/podman/podman.sock:/var/run/docker.sock
 Volume=./container-config/traefik/acme.json:/acme.json
 Volume=./container-config/traefik/traefik.yaml:/etc/traefik/traefik.yml
+# Volume=%h/container-data/traefik/logs:/logs
 
 # Traefik Labels
 Label="traefik.enable=true"
