@@ -15,7 +15,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=tandoor-db
-Image=docker.io/library/postgres:18.2
+Image=docker.io/library/postgres:18.3
 AutoUpdate=registry
 Pull=newer
 
