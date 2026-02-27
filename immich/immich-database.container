@@ -40,6 +40,7 @@ HealthCmd=/usr/bin/pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE_NAME}
 HealthInterval=30s
 HealthTimeout=5s
 HealthRetries=3
+Notify=healthy
 
 # Glance Labels
 Label="glance.parent=immich"

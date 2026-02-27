@@ -1,10 +1,8 @@
 [Unit]
 Description=Immich Server - Photo and video management
-Requires=immich-redis.service
-After=immich-redis.service
-Requires=immich-database.service
-After=immich-database.service
-After=immich-machine-learning.service
+PartOf=immich-database.service immich-redis.service
+Requires=immich-database.service immich-redis.service
+After=immich-database.service immich-redis.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env

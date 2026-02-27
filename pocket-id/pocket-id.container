@@ -22,6 +22,7 @@ HealthInterval=1m30s
 HealthRetries=2
 HealthStartPeriod=10s
 HealthTimeout=5s
+Notify=healthy
 
 # Environment options
 EnvironmentFile=.env

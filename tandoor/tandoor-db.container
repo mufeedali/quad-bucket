@@ -1,10 +1,9 @@
 [Unit]
 Description=Tandoor DB - Postgres instance for Tandoor
-Requires=tandoor-network.service
-After=tandoor-network.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
+EnvironmentFile=%h/.config/containers/systemd/tandoor/.env
 Restart=on-abnormal
 TimeoutStartSec=60s
 TimeoutStopSec=30s
@@ -30,6 +29,13 @@ Network=tandoor.network
 
 # Volume binds
 Volume=%h/container-data/tandoor-db:/var/lib/postgresql
+
+# Health check
+HealthCmd=/usr/bin/pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+Notify=healthy
 
 # Glance Labels
 Label="glance.parent=tandoor"

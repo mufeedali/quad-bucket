@@ -1,5 +1,8 @@
 [Unit]
 Description=Immich Machine Learning - ML processing service
+PartOf=immich-database.service immich-redis.service
+Requires=immich-database.service immich-redis.service
+After=immich-database.service immich-redis.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env

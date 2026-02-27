@@ -1,10 +1,8 @@
 [Unit]
 Description=Tandoor - Recipe Manager
-Requires=tandoor-db.service
-After=tandoor-db.service
-Requires=tandoor-network.service
-After=tandoor-network.service
-After=pocket-id.service
+PartOf=tandoor-db.service
+Requires=tandoor-db.service pocket-id.service
+After=tandoor-db.service pocket-id.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
