@@ -17,8 +17,8 @@ ContainerName=webhook
 Image=docker.io/almir/webhook:2.8.3
 Entrypoint=/bin/sh
 Exec=-c "sed 's/{{WEBHOOK_SECRET}}/'"$WEBHOOK_SECRET"'/' \
-  /etc/webhook/hooks.tmpl > /etc/webhook/hooks.json && cat \
-  /etc/webhook/hooks.json && /usr/local/bin/webhook -verbose \
+  /etc/webhook/hooks.tmpl > /etc/webhook/hooks.json && \
+  /usr/local/bin/webhook -verbose \
   -hooks=/etc/webhook/hooks.json -hotreload"
 PodmanArgs=--tmpfs /etc/webhook:rw,size=64k,mode=1777
 

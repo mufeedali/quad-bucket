@@ -14,12 +14,63 @@ UNITS=(
     "renovate-scheduler.service:gitops/renovate/renovate-scheduler.service"
     "renovate.path:gitops/renovate/renovate.path"
     "gitops-update.path:gitops/system/gitops-update.path"
+    "gitops-update-scheduler.service:gitops/system/gitops-update-scheduler.service"
+    "gitops-update.timer:gitops/system/gitops-update.timer"
     "gitops-update.service:gitops/system/gitops-update.service"
 )
 
 # --- Helper Functions ---
 function log() {
     echo "[manage-systemd] $1"
+}
+
+function get_version() {
+    local file="$1"
+    if [ -f "$file" ]; then
+        # Extract the number from "# VERSION=X"
+        local ver=$(head -n 1 "$file" | grep -oP '^# VERSION=\K.*')
+        echo "${ver:-none}"
+    else
+        echo "missing"
+    fi
+}
+
+function status() {
+    log "Checking systemd unit versions..."
+    printf "%-35s %-12s %-15s %s\n" "UNIT" "REPO VER" "INSTALLED VER" "STATUS"
+    echo "----------------------------------------------------------------------------"
+    
+    local all_ok=true
+    
+    for entry in "${UNITS[@]}"; do
+        IFS=":" read -r unit_name rel_path <<< "$entry"
+        source_path="$REPO_ROOT/$rel_path"
+        target_path="$SYSTEMD_USER_DIR/$unit_name"
+        
+        repo_ver=$(get_version "$source_path")
+        installed_ver=$(get_version "$target_path")
+        
+        status_msg=""
+        if [ "$installed_ver" = "missing" ]; then
+            status_msg="[NOT INSTALLED]"
+            all_ok=false
+        elif [ "$repo_ver" != "$installed_ver" ]; then
+            status_msg="[OUT OF DATE]"
+            all_ok=false
+        else
+            status_msg="[OK]"
+        fi
+        
+        printf "%-35s %-12s %-15s %s\n" "$unit_name" "$repo_ver" "$installed_ver" "$status_msg"
+    done
+    
+    if [ "$all_ok" = false ]; then
+        echo ""
+        log "Some units need updating. Run: $0 install"
+    else
+        echo ""
+        log "All units are up to date."
+    fi
 }
 
 function install() {
@@ -36,8 +87,12 @@ function install() {
             exit 1
         fi
 
-        log "Linking $unit_name -> $rel_path"
-        ln -sf "$source_path" "$target_path"
+        log "Copying $unit_name -> $rel_path"
+        # If it's a symlink, remove it first
+        if [ -L "$target_path" ]; then
+            rm "$target_path"
+        fi
+        cp "$source_path" "$target_path"
     done
 
     log "Reloading systemd daemon..."
@@ -63,7 +118,7 @@ function uninstall() {
         fi
 
         if [ -L "$target_path" ] || [ -f "$target_path" ]; then
-            log "Removing link $unit_name..."
+            log "Removing $unit_name..."
             rm "$target_path"
         else
             log "Skipping $unit_name (not found)"
@@ -77,6 +132,9 @@ function uninstall() {
 
 # --- Main Execution ---
 case "$1" in
+    status)
+        status
+        ;;
     install)
         install
         ;;
@@ -84,7 +142,7 @@ case "$1" in
         uninstall
         ;;
     *)
-        echo "Usage: $0 {install|uninstall}"
+        echo "Usage: $0 {status|install|uninstall}"
         exit 1
         ;;
 esac

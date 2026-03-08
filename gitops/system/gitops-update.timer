@@ -1,0 +1,11 @@
+# VERSION=1
+[Unit]
+Description=GitOps Update Debounce Timer
+
+[Timer]
+# Wait 2 minutes after this timer is started/restarted
+OnActiveSec=2m
+Unit=gitops-update.service
+
+[Install]
+WantedBy=timers.target

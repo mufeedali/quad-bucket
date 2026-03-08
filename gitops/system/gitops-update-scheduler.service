@@ -1,0 +1,8 @@
+# VERSION=1
+[Unit]
+Description=Restart GitOps Update Timer (Debounce)
+
+[Service]
+Type=oneshot
+# Restarting the timer resets its countdown
+ExecStart=/usr/bin/systemctl --user restart gitops-update.timer

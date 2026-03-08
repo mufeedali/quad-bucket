@@ -64,6 +64,12 @@ Renovate (hourly + on-push) -> PR with update -> Manual Merge via Web UI or Mobi
 -> touch trigger -> systemd .path -> Pull changes -> Restart relevant containers
 ```
 
+To install or check the status of the systemd automation units (paths, timers, services) responsible for GitOps, use:
+```bash
+./gitops/scripts/manage-systemd.sh status
+./gitops/scripts/manage-systemd.sh install
+```
+
 ## Dev
 
 - Update `.env.example` files with `qh generate env` (quadlet-helper). There's also a pre-commit hook in the .githooks directory.
