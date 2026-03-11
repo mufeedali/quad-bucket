@@ -78,3 +78,7 @@ To install or check the status of the systemd automation units (paths, timers, s
 
 - Update Cloudflare IPs in `traefik.yaml` with `qh cloudflare run`. Automate using `qh cloudflare install`.
 - Update `traefik.yaml.example` file with `qh generate traefik`.
+
+## ToDo
+
+- [ ] Systemd service for Immich's rclone mount
