@@ -52,7 +52,7 @@ CHANGED_FILES=$(git diff --name-only HEAD origin/main | grep '\.container$' || t
 
 if [ -z "$CHANGED_FILES" ]; then
     echo "[$TIMESTAMP] No container changes detected. Performing standard pull."
-    git merge origin/main
+    git pull --ff-only origin main
     echo "[$TIMESTAMP] Status: Synced (No Restarts)"
     exit 0
 fi
@@ -61,7 +61,7 @@ echo "[$TIMESTAMP] Changes detected in: $(echo $CHANGED_FILES | xargs)"
 
 # --- 6. Apply & Restart ---
 echo "[$TIMESTAMP] Merging changes from origin/main..."
-git merge origin/main
+git pull --ff-only origin main
 
 echo "[$TIMESTAMP] Pushing changes to GitHub mirror..."
 git push github main
