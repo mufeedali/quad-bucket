@@ -16,7 +16,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=immich-machine-learning
-Image=ghcr.io/immich-app/immich-machine-learning:v2.7.0
+Image=ghcr.io/immich-app/immich-machine-learning:v2.7.2
 AutoUpdate=registry
 Pull=newer
 
