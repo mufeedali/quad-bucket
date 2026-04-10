@@ -16,7 +16,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=forgejo
-Image=codeberg.org/forgejo/forgejo:14.0.3-rootless
+Image=codeberg.org/forgejo/forgejo:14.0.4-rootless
 AutoUpdate=registry
 Pull=newer
 
