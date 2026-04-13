@@ -17,7 +17,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=immich-server
-Image=ghcr.io/immich-app/immich-server:v2.7.4
+Image=ghcr.io/immich-app/immich-server:v2.7.5
 AutoUpdate=registry
 Pull=newer
 
