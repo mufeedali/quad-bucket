@@ -21,7 +21,7 @@ Pull=newer
 Network=immich.network
 
 # Health check
-HealthCmd=redis-cli ping || exit 1
+HealthCmd=redis-cli ping
 HealthInterval=30s
 HealthTimeout=5s
 HealthRetries=3

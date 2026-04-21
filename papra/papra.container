@@ -22,7 +22,8 @@ Pull=newer
 EnvironmentFile=.env
 
 # User options
-User=0:0
+User=0
+Group=0
 
 # Network options
 Network=shared-network

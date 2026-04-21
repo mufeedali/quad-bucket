@@ -1,6 +1,5 @@
 [Unit]
 Description=Renovate Bot
-After=network-online.target
 
 [Service]
 Type=oneshot
