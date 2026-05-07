@@ -54,8 +54,12 @@ systemctl --user daemon-reload
 for file in $CHANGED_FILES; do
 	SERVICE_NAME="${file##*/}"
 	SERVICE_NAME="${SERVICE_NAME%.*}.service"
+	CASCADE=$(systemctl --user show "$SERVICE_NAME" --property=ConsistsOf --value 2>/dev/null || true)
+
 	log "Processing: $SERVICE_NAME"
-	if systemctl --user is-failed --quiet "$SERVICE_NAME"; then
+	if [ -n "$CASCADE" ]; then
+		systemctl --user restart "$SERVICE_NAME" $CASCADE
+	elif systemctl --user is-failed --quiet "$SERVICE_NAME"; then
 		systemctl --user restart "$SERVICE_NAME"
 	else
 		systemctl --user try-restart "$SERVICE_NAME"
