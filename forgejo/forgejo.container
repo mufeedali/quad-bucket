@@ -44,7 +44,6 @@ PublishPort=2222:2222
 Volume=%h/container-data/forgejo/:/var/lib/gitea
 Volume=./container-config/forgejo/:/etc/gitea
 Volume=/etc/localtime:/etc/localtime:ro
-Volume=/etc/timezone:/etc/timezone:ro
 
 # Traefik Labels
 Label="traefik.enable=true"
