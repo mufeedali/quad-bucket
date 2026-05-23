@@ -13,7 +13,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=livesync
-Image=docker.io/apache/couchdb:3.5.1
+Image=docker.io/apache/couchdb:3.5.2
 AutoUpdate=registry
 Pull=newer
 
