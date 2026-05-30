@@ -13,7 +13,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=glance
-Image=docker.io/glanceapp/glance:v0.8.4
+Image=docker.io/glanceapp/glance:v0.8.5
 AutoUpdate=registry
 Pull=newer
 
