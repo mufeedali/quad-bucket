@@ -6,9 +6,9 @@
         {
             "groupName": "immich-containers",
             "matchManagers": ["quadlet"],
-            "matchPackagePatterns": [
-                "ghcr.io/immich-app/immich-server",
-                "ghcr.io/immich-app/immich-machine-learning"
+            "matchPackageNames": [
+                "/ghcr.io/immich-app/immich-server/",
+                "/ghcr.io/immich-app/immich-machine-learning/"
             ]
         }
     ]
