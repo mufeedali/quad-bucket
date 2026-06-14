@@ -1,0 +1,48 @@
+[Unit]
+Description=Stump - Books Server
+After=traefik.service
+
+[Service]
+EnvironmentFile=%h/.config/containers/systemd/.env
+Restart=on-abnormal
+TimeoutStartSec=60s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target default.target
+
+[Container]
+# Container properties
+ContainerName=stump
+Image=docker.io/aaronleopold/stump:latest
+AutoUpdate=registry
+Pull=newer
+
+# Environment options
+Environment=PUID=%U
+Environment=PGID=%G
+Environment=STUMP_TRUST_PROXY_HEADERS=true
+EnvironmentFile=.env
+
+# User options
+UserNS=keep-id:uid=%U,gid=%G
+
+# Network options
+Network=shared-network
+
+# Volume binds
+Volume=./container-config/stump:/config
+Volume=%h/Books/Stump:/data:ro,Z
+
+# Traefik Labels
+Label="traefik.enable=true"
+Label="traefik.http.routers.stump.rule=Host(`books.${DOMAIN_URL}`)"
+Label="traefik.http.routers.stump.entrypoints=web-secure,web-secure-internal"
+Label="traefik.http.services.stump.loadbalancer.server.port=10801"
+
+# Glance Labels
+Label="glance.name=Stump"
+Label="glance.icon=auto-invert sh:stump-dark"
+Label="glance.url=https://books.${DOMAIN_URL}"
+Label="glance.description=Books Tracker"
+Label="glance.id=stump"
