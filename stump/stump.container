@@ -14,7 +14,7 @@ WantedBy=multi-user.target default.target
 [Container]
 # Container properties
 ContainerName=stump
-Image=docker.io/aaronleopold/stump:latest
+Image=docker.io/aaronleopold/stump:0.1.4
 AutoUpdate=registry
 Pull=newer
 
