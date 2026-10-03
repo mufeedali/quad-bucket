@@ -5,7 +5,7 @@ Description=Pocket ID - OIDC Auth
 EnvironmentFile=%h/.config/containers/systemd/.env
 EnvironmentFile=%h/.config/containers/systemd/pocket-id/.env
 Restart=on-abnormal
-TimeoutStartSec=60s
+TimeoutStartSec=180s
 TimeoutStopSec=30s
 
 [Install]
