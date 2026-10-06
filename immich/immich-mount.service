@@ -1,0 +1,18 @@
+# VERSION=1
+[Unit]
+Description=Immich uploads rclone mount
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+EnvironmentFile=%h/.config/containers/systemd/.env
+EnvironmentFile=%h/.config/containers/systemd/immich/.env
+ExecStart=/usr/bin/rclone mount ${RCLONE_REMOTE}: ${UPLOAD_LOCATION} \
+  --config=%h/.config/rclone/rclone.conf \
+  --cache-dir=%h/.cache/rclone \
+  --vfs-cache-mode full \
+  --vfs-cache-max-size 80G \
+  --transfers 200
+Restart=on-failure
+RestartSec=10
+TimeoutStopSec=300

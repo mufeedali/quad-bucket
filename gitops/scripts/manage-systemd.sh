@@ -17,6 +17,7 @@ UNITS=(
 	"gitops-update-scheduler.service:gitops/system/gitops-update-scheduler.service"
 	"gitops-update.timer:gitops/system/gitops-update.timer"
 	"gitops-update.service:gitops/system/gitops-update.service"
+	"immich-mount.service:immich/immich-mount.service"
 )
 
 # --- Helper Functions ---

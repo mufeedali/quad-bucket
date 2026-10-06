@@ -1,12 +1,13 @@
 [Unit]
 Description=Immich Server - Photo and video management
 PartOf=immich-database.service immich-redis.service
-Requires=immich-database.service immich-redis.service
-After=immich-database.service immich-redis.service
+Requires=immich-database.service immich-redis.service immich-mount.service
+After=immich-database.service immich-redis.service immich-mount.service
 
 [Service]
 EnvironmentFile=%h/.config/containers/systemd/.env
 EnvironmentFile=%h/.config/containers/systemd/immich/.env
+ExecStartPre=/usr/bin/mountpoint -q ${UPLOAD_LOCATION}
 Restart=on-abnormal
 TimeoutStartSec=120s
 TimeoutStopSec=30s

@@ -81,4 +81,4 @@ To install or check the status of the systemd automation units (paths, timers, s
 
 ## ToDo
 
-- [ ] Systemd service for Immich's rclone mount
+Undecided.
