@@ -24,7 +24,7 @@ EnvironmentFile=.env
 Network=shared-network
 
 # Volume binds
-Volume=%h/container-data/silverbullet/:/space
+Volume=%h/container-data/silverbullet/:/data
 
 # Traefik Labels
 Label="traefik.enable=true"
