@@ -1,6 +1,6 @@
 [Unit]
 Description=Immich Server - Photo and video management
-PartOf=immich-database.service immich-redis.service
+PartOf=immich-database.service immich-redis.service immich-mount.service
 Requires=immich-database.service immich-redis.service immich-mount.service
 After=immich-database.service immich-redis.service immich-mount.service
 
