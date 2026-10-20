@@ -19,3 +19,5 @@ EnvironmentFile=.env
 
 # Volume binds
 Volume=%h/container-data/renovate:/tmp/renovate
+# Forgejo host key for SSH git pushes
+Volume=./ssh/known_hosts:/etc/ssh/ssh_known_hosts:ro
